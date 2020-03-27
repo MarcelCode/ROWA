@@ -49,6 +49,7 @@
     "transform": {
       ".*\\.(vue)$": "vue-jest",
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
-    }
+    },
+    "setupFilesAfterEnv": ["<rootDir>src/tests/testSetup.js"]
   }
 }
