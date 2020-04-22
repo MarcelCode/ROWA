@@ -1,23 +1,24 @@
 // Import `shallowMount` from Vue Test Utils and the component being tested
 import { createLocalVue, mount,shallowMount } from '@vue/test-utils'
+import flushPromises from 'flush-promises'
 import FarmInfo from '../components/home/FarmInfo.vue'
 import vuetify from "vuetify"
-
+import Vue from "vue"
 
 // Mount the component
 //const wrapper = shallowMount(FarmInfo)
 // Here are some Jest tests, though you can
 // use any test runner/assertion library combo you prefer
-describe('FarmInfo', () => {
+describe('FarmInfo',  () => {
   let wrapper;
   beforeEach(() => {
-    const localVue = createLocalVue()
+    const localVue =  createLocalVue()
     localVue.use(vuetify)
     wrapper = shallowMount(FarmInfo, {localVue})
   })
   
   // Inspect the raw component options
   it('has a created hook', () => {
-    expect(shallowMount(FarmInfo).isVueInstance()).toBe(true)
+     expect(shallowMount(FarmInfo).isVueInstance()).toBe(true)
   })
 })
