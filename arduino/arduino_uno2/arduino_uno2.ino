@@ -8,8 +8,14 @@
 //pH sensor
 #include <SoftwareSerial.h>
 
+//RC Emitter
+#include <RCSwitch.h>
+
+//Define for Emitter
+RCSwitch sender = RCSwitch();
+
 // Led Pins for Modules
-const int module1 = 12;
+const int module1 = 13;
 const int module2 = 11;
 const int module3 = 10;
 const int module4 = 9;
@@ -75,6 +81,14 @@ void setup() {
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
 
+  //Emitter
+  sender.enableTransmit(3);  // An Pin 3
+
+  sender.setProtocol(1);
+  sender.setPulseLength(300);
+
+
+
   //WaterTemp
   sensors.begin();
 
@@ -129,6 +143,12 @@ void loop() {
         ledOn=false;
         break;
       // Just a random number to signalise to turn off any led -> 99
+      case 90:
+        StartPump();
+        break;
+       case 91:
+        StopPump();
+        break;
       case 99:
         LedOff();
       default:
@@ -136,7 +156,7 @@ void loop() {
     }
   }
 
-  
+
   if(millis() > time_now + printPeriod){
     time_now = millis();
     struct temphum temphum_instance = getHumTemp();
@@ -154,7 +174,7 @@ void loop() {
     digitalWrite(ledPin, HIGH);
     delay(500);
   }
-  
+
 }
 
 //TestingFor phNode sending Stuff
@@ -215,6 +235,15 @@ long getDistance() {
   return (duration/2) / 29.1;
  }
 
+
+ void StartPump(){
+   sender.sendTriState("000FF0FFFF0F");
+   delay(100);
+ }
+ void StopPump(){
+   sender.sendTriState("000FF0FFFFF0");
+   delay(100);
+ }
 
 float getWaterTemp(){
   sensors.requestTemperatures();

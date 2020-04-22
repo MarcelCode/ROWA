@@ -4,12 +4,12 @@
         <v-col cols="6" align="center"  align-self="center">
           <h2>Light On:</h2>
           <h3>Currently: {{current_time.time_on}}</h3>
-          <v-time-picker width="230px" v-model="start" :max="end" format="24hr"></v-time-picker>
+          <v-time-picker width="230px" v-model="start" format="24hr"></v-time-picker>
         </v-col>
         <v-col cols="6" align="center"  align-self="center">
           <h2>Light Off: </h2>
           <h3>Currently: {{current_time.time_off}}</h3>
-          <v-time-picker width="230px" v-model="end" :min="start" format="24hr"></v-time-picker>
+          <v-time-picker width="230px" v-model="end" format="24hr"></v-time-picker>
         </v-col>
       </v-row>
 <v-row justify="space-around" align="center" style="margin: 5px 0px 5px 0px">
@@ -109,7 +109,7 @@
         
 
 
-         }
+         },
     };
 </script>
 

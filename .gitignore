@@ -15,6 +15,11 @@ yarn-error.log*
 *.db
 *.sw?
 *.exe
+*.key
+*.crt
+*.zip
+*.rar
+*.pem
 *.out
 
 

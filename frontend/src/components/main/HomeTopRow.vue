@@ -1,7 +1,7 @@
 <template>
     <v-row>
         <v-col cols="4" style="padding-left: 30px">
-            <v-btn icon x-large :to="{name:'AdminSettings'}">
+            <v-btn icon x-large :to="{name:'AdminMenu'}">
                 <v-icon>$vuetify.icons.adminSettings</v-icon>
             </v-btn>
         </v-col>

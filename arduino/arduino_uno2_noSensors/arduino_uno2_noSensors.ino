@@ -8,6 +8,12 @@
 //pH sensor
 #include <SoftwareSerial.h>
 
+//RC Emitter
+#include <RCSwitch.h>
+
+//Define for Emitter
+RCSwitch sender = RCSwitch();
+
 // Led Pins for Modules
 const int module1 = 6;
 const int module2 = 11;
@@ -35,10 +41,7 @@ struct temphum {
   float temp;
   float humi;
 };
- //pH
- #define rx 2
- #define tx 3
-SoftwareSerial myserial(rx, tx);
+
 float pH;
 String sensorstring = "";
 boolean sensor_string_complete;
@@ -77,12 +80,17 @@ void setup() {
 
   //WaterTemp
 
+ //Emitter
+  sender.enableTransmit(3);  // An Pin 3
+
+  sender.setProtocol(1);
+  sender.setPulseLength(300);
 
   //pH Node
 
   
   Serial.begin(9600);
-  myserial.begin(9600);
+
 
 
    //Wait for HumTemp to start
@@ -125,6 +133,12 @@ void loop() {
         ledOn=false;
         break;
       // Just a random number to signalise to turn off any led -> 99
+      case 90:
+        StartPump();
+        break;
+       case 91:
+        StopPump();
+        break;
       case 99:
         LedOff();
       default:
@@ -190,6 +204,15 @@ void SwitchOff(){
     digitalWrite(module5, HIGH);
     digitalWrite(module6, HIGH);
   }
+
+ void StartPump(){
+   sender.sendTriState("000FFF0FFF0F");
+   delay(100);
+ }
+ void StopPump(){
+   sender.sendTriState("000FFF0FFFF0");
+   delay(100);
+ }
 
 
 int getLightIntensity(){

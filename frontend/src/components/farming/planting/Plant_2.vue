@@ -23,36 +23,36 @@
 </template>
 
 <script>
-import CatTree from "../../home/Farm/CatTree"
+    import CatTree from "../../home/Farm/CatTree"
 
 
-export default {
-    name: "plant_2",
-    components:{
-         CatTree,
-    },
-    props:{
-        selectedPlant: String,
-        moduleNumber: Number
-    },
-    data(){
-        return{
-            selectedplant:this.selectedPlant,
-            positionModule: null,
-        }
-    },
-    methods:{
-           getImgUrl(pic) {
-                return require('@/assets/harvesting/plants/'+pic+".png")
+    export default {
+        name: "plant_2",
+        components: {
+            CatTree,
+        },
+        props: {
+            selectedPlant: String,
+            moduleNumber: Number
+        },
+        data() {
+            return {
+                selectedplant: this.selectedPlant,
+                positionModule: null,
+            }
+        },
+        methods: {
+            getImgUrl(pic) {
+                return require('@/assets/harvesting/plants/' + pic + ".png")
             },
-      
-    },
-    created(){
-  
-    }
 
-    
-}
+        },
+        created() {
+
+        }
+
+
+    }
 </script>
 
 <style scoped>
@@ -62,22 +62,22 @@ export default {
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   margin: 20px 100px 0 100px;
+}
+    h3 {
 
-}
-h3{
-      
-font-family: Montserrat;
-font-style: normal;
-font-weight: 600;
-font-size: 18px;
-line-height: 22px;
-color:var(--v-primary-base)
-}
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 22px;
+        color: var(--v-primary-base)
+    }
 
-#button{
- font-weight: bold;
- margin: 40px;
- font-family: Montserrat;
- font-size: 24px
-}
+    #button {
+        font-weight: bold;
+        margin: 40px;
+        font-family: Montserrat;
+        font-size: 24px
+    }
+
 </style>

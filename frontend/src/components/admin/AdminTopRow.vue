@@ -1,21 +1,17 @@
 <template>
     <v-row align-center>
         <v-col cols="2" style="padding-left: 30px">
-             <router-link :to="{}">
-            <v-btn dark fab color="white">
+            <v-btn dark fab color="white" :to="{name:this.prevPage}">
                 <v-icon color="primary">mdi-arrow-left</v-icon>
             </v-btn>
-             </router-link>
         </v-col>
         <v-col align="center"  align-self="center" cols="8">
              <h3 style="color:#828282" v-text="headtext"></h3>
         </v-col>
         <v-col cols="2" id="logo-text" style="text-align: right; padding-right: 30px">
-             <router-link :to="{name:'Home'}">
-            <v-btn dark fab color="white">
+            <v-btn dark fab color="white" :to="{name:'Home'}">
                 <v-icon color="primary">mdi-close</v-icon>
             </v-btn>
-            </router-link>
         </v-col>
     </v-row>
 
@@ -29,7 +25,8 @@
             
         },
         props:{
-                headtext: String
+                headtext: String,
+                prevPage: String
         }
     }
 </script>

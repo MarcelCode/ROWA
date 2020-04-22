@@ -16,7 +16,7 @@
             <div v-for="key in positions" :key="key" style="width: 15%; display: inline-flex; height: 50px; z-index: 2; align-items: center;
   justify-content: center;">
                 <span class="dot" v-if="module_plants.pos[key].harvestable" :style="[module_plants.pos[key].harvestable ? {'background-color': '#789659'} : {}]"></span>
-                <span class="dot" v-if="!module_plants.pos[key]" :style="[{'background-color': '#E3927B'}]"></span>
+                <span class="dot" v-if="module_plants.pos[key].harvestable == null" :style="[{'background-color': '#E3927B'}]"></span>
             </div>
         </div>
     </div>
@@ -63,7 +63,7 @@
             },
         },
         created() {
-            console.log(this.module_plants)
+            
         }
     }
 </script>

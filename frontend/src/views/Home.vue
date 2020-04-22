@@ -62,6 +62,7 @@
             };
         },
         methods: {
+            
             getSensorData: function () {
                 this.sensor_data_updated = new Date().toISOString()
                 axios.get("http://127.0.0.1:3000/dashboard/sensor-data")

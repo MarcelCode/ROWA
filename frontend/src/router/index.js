@@ -21,6 +21,24 @@ const routes = [
     component: ()  => import('@/views/AdminSettings')
 
   },
+  {
+    path: '/pin',
+    name: 'AdminMenu',
+    component: ()  => import('@/views/PinAndAdminMenu')
+
+  },
+  {
+    path: '/adminmodule',
+    name: 'TypeChanger',
+    component: ()  => import('@/views/ModuleTypeSettings')
+
+  },
+
+  {
+    path: '/batchfarming',
+    name: 'BatchFarming',
+    component: () => import('@/views/BatchFarming')
+  },
   
   {
     path: '/plant',
