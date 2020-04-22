@@ -91,7 +91,7 @@ func (store *Database) DbSetup() (err error) {
 	statement, _ = store.Db.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
 
 	yesterday := time.Date(2019, 11, 17, 20, 0, 0, 0, time.UTC)
-	light := 100
+	//light := 100
 	temp := 0
 	fmt.Println("then:", yesterday.Format(time.RFC3339))
 
