@@ -3,7 +3,6 @@ package sensor
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"math/rand"
 	"strconv"
 	"strings"
@@ -12,6 +11,7 @@ import (
 	"github.com/MarcelCode/ROWA/src/influx"
 
 	"github.com/tarm/serial"
+	"github.com/sirupsen/logrus"
 )
 
 /*Serial Port Configs
@@ -19,6 +19,10 @@ import (
 /dev/cu.usbmodem1434301 Macbook
 COM5 windows
 */
+
+
+// Create a new instance of the logger. You can have any number of instances.
+var log = logrus.New()
 
 func setupSerialConnection() (s *serial.Port, err error) {
 	c := &serial.Config{Name: "/dev/ttyACM0", Baud: 9600}
