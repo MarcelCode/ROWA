@@ -9,9 +9,11 @@ import (
 	"time"
 
 	"github.com/MarcelCode/ROWA/src/influx"
+	"github.com/MarcelCode/ROWA/src/settings"
+	"github.com/aws/aws-sdk-go/service/iotdataplane"
 
-	"github.com/tarm/serial"
 	"github.com/sirupsen/logrus"
+	"github.com/tarm/serial"
 )
 
 /*Serial Port Configs
@@ -19,7 +21,6 @@ import (
 /dev/cu.usbmodem1434301 Macbook
 COM5 windows
 */
-
 
 // Create a new instance of the logger. You can have any number of instances.
 var log = logrus.New()
@@ -156,8 +157,13 @@ func ReadFakeSensorData() {
 }
 func ReadSensorData() {
 	var serialString string
-	svc := influx.AwsInit()
+	var svc *iotdataplane.IoTDataPlane
+	if settings.PushToAws {
+		svc = influx.AwsInit()
+	}
+
 	s, _ := setupSerialConnection()
+
 	defer s.Close()
 
 	database, _ := sql.Open("sqlite3", "./rowa.db")
@@ -189,7 +195,9 @@ func ReadSensorData() {
 				if err1 == nil && err2 == nil && err4 == nil && err3 == nil && err5 == nil && err6 == nil {
 					fmt.Println(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 					//Writing to aws
-					influx.AwsPublishInput(svc, sl, datetime.Unix())
+					if settings.PushToAws {
+						influx.AwsPublishInput(svc, sl, datetime.Unix())
+					}
 					datetime := datetime.UTC().Format(time.RFC3339)
 					//Writing to local db
 					statement.Exec(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
