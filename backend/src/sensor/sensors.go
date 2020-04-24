@@ -131,7 +131,10 @@ func ReadFakeSensorData() {
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
 	defer database.Close()
-	svc := influx.AwsInit()
+	var svc *iotdataplane.IoTDataPlane
+	if settings.PushToAws {
+		svc = influx.AwsInit()
+	}
 	for {
 		var s []float32
 		datetime := time.Now()
@@ -148,8 +151,9 @@ func ReadFakeSensorData() {
 		statement.Exec(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 
 		//Publishing to AWS here:
-		influx.AwsPublishInput(svc, s, datetime.Unix())
-
+		if settings.PushToAws {
+			influx.AwsPublishInput(svc, s, datetime.Unix())
+		}
 		time.Sleep(2 * time.Second)
 	}
 	//TODO on system shutdown influx.InfluxClose(client)
