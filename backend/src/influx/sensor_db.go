@@ -3,12 +3,14 @@ package influx
 import (
 	"encoding/json"
 	"fmt"
-	"log"
-
+	
+	log"github.com/sirupsen/logrus"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/iotdataplane"
 )
+
+
 
 type State struct {
 	State *Reported `json:"state"`
@@ -64,5 +66,5 @@ func AwsPublishInput(iotDataSvc *iotdataplane.IoTDataPlane, s []float32, timesta
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(resp)
+	log.Warning(resp)
 }

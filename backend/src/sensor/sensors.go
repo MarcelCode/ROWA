@@ -12,7 +12,7 @@ import (
 	"github.com/MarcelCode/ROWA/src/settings"
 	"github.com/aws/aws-sdk-go/service/iotdataplane"
 
-	"github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 	"github.com/tarm/serial"
 )
 
@@ -22,8 +22,7 @@ import (
 COM5 windows
 */
 
-// Create a new instance of the logger. You can have any number of instances.
-var log = logrus.New()
+
 
 func setupSerialConnection() (s *serial.Port, err error) {
 	c := &serial.Config{Name: "/dev/ttyACM0", Baud: 9600}
@@ -65,10 +64,8 @@ func TriggerPump(state bool) {
 		time.Sleep(2 * time.Second)*/
 	if state {
 		_, err = s.Write([]byte("90"))
-		fmt.Println("true")
 	} else {
 		_, err = s.Write([]byte("91"))
-		fmt.Println("false")
 	}
 
 	if err != nil {
@@ -101,7 +98,6 @@ func LightSwitch(state bool) {
 
 	//send turn off or on to arduino
 	if state {
-		fmt.Println("d")
 		_, err = s.Write([]byte("80"))
 
 		//change DB light State
@@ -110,7 +106,6 @@ func LightSwitch(state bool) {
 		statement.Exec()
 		database.Close()
 	} else {
-		fmt.Println("c")
 		_, err = s.Write([]byte("81"))
 
 		//change DB light State

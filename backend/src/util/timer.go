@@ -6,7 +6,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
+	"os"
+    log "github.com/sirupsen/logrus"
 	"github.com/MarcelCode/ROWA/src/sensor"
 	"github.com/jasonlvhit/gocron"
 )
@@ -17,9 +18,14 @@ type Times struct {
 }
 
 var light = gocron.NewScheduler()
+var logs = gocron.NewScheduler()
 
 func Runner() {
 	<-light.Start()
+}
+
+func RunnerLog() {
+	<-logs.Start()
 }
 
 func LightTimesRenew() {
@@ -116,6 +122,33 @@ func PumpTimesRenew() {
 	light.Every(1).Day().At(restartTime.TimeOn).From(&tOn).Do(sensor.TriggerPump, true)
 	light.Every(1).Day().At(restartTime.TimeOff).From(&tOff).Do(sensor.TriggerPump, false)
 	rows.Close()
+}
+
+func LogNameIntervall(){
+	logs.Remove(LogRenew)
+    logs.Every(1).Day().At("00:00").From(gocron.NextTick()).Do(LogRenew)
+	//logs.Every(2).Seconds().Do(LogRenew)
+	
+}
+
+func LogRenew() {
+	var filename string = "logfile-backend-"+ time.Now().Format("2006-01-02") +".log"
+    // Create the log file if doesn't exist. And append to it if it already exists.
+    f, err := os.OpenFile(filename, os.O_WRONLY | os.O_APPEND | os.O_CREATE, 0644)
+    Formatter := new(log.TextFormatter)
+    // You can change the Timestamp format. But you have to use the same date and time.
+    // "2006-02-02 15:04:06" Works. If you change any digit, it won't work
+    // ie "Mon Jan 2 15:04:05 MST 2006" is the reference time. You can't change it
+    Formatter.TimestampFormat = "02-01-2006 15:04:05"
+    Formatter.FullTimestamp = true
+	log.SetFormatter(Formatter)
+    if err != nil {
+        // Cannot open log file. Logging to stderr
+        fmt.Println(err)
+    }else{
+        log.SetOutput(f)
+	}
+	
 }
 
 func HourAdder(TimeOffHour int) int {

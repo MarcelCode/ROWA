@@ -2,10 +2,11 @@ package main
 
 import (
 	"database/sql"
-	"os"
-	"fmt"
+	
 	log "github.com/sirupsen/logrus"
 
+	"os"
+	"time"
 	"github.com/MarcelCode/ROWA/src/api"
 	"github.com/MarcelCode/ROWA/src/db"
 
@@ -16,35 +17,25 @@ import (
 	"github.com/labstack/echo/middleware"
 )
 
+
+
 func main() {
-	var filename string = "logfile.log"
-    // Create the log file if doesn't exist. And append to it if it already exists.
-    f, err := os.OpenFile(filename, os.O_WRONLY | os.O_APPEND | os.O_CREATE, 0644)
-    Formatter := new(log.TextFormatter)
-    // You can change the Timestamp format. But you have to use the same date and time.
-    // "2006-02-02 15:04:06" Works. If you change any digit, it won't work
-    // ie "Mon Jan 2 15:04:05 MST 2006" is the reference time. You can't change it
-    Formatter.TimestampFormat = "02-01-2006 15:04:05"
-    Formatter.FullTimestamp = true
-    log.SetFormatter(Formatter)
-    if err != nil {
-        // Cannot open log file. Logging to stderr
-        fmt.Println(err)
-    }else{
-        log.SetOutput(f)
-	}
 	
+	util.LogNameIntervall()
+    go util.RunnerLog()
 
 	database, err := sql.Open("sqlite3", "rowa.db")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer database.Close()
-	log.Warning("This is a warning")
+	
 	db.InitStore(&db.Database{Db: database})
 
 	if settings.Debug {
 		db.FunctionStore.DbSetup()
+		
+
 	}
 
 	if settings.ArduinoOn {
@@ -57,8 +48,16 @@ func main() {
 	}
 
 	e := echo.New()
-
 	e.Use(middleware.CORS())
+
+
+	//make echo log all requests
+	var filename string = "logfile-httprequests-"+ time.Now().Format("2006-01-02") +".log"
+    f, err := os.OpenFile(filename, os.O_WRONLY | os.O_APPEND | os.O_CREATE, 0644)
+	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "method=${method}, uri=${uri}, status=${status}, error=${error}\n",
+		Output: f,
+	  }))
 
 	// Routes
 	e.GET("/dashboard/sensor-data", api.GetSensorDataHandler)
