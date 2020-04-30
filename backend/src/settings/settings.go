@@ -4,4 +4,4 @@ const Debug = true
 
 const ArduinoOn = false
 
-const PushToAws = false
+const PushToAws = true

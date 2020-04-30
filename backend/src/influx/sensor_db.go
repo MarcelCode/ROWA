@@ -64,7 +64,8 @@ func AwsPublishInput(iotDataSvc *iotdataplane.IoTDataPlane, s []float32, timesta
 	resp, err := iotDataSvc.Publish(input)
 
 	if err != nil {
+		log.Warning(resp)
 		log.Fatal(err)
 	}
-	log.Warning(resp)
+
 }

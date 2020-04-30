@@ -20,9 +20,12 @@ import (
 
 
 func main() {
+
+	
 	
 	util.LogNameIntervall()
-    go util.RunnerLog()
+	go util.RunnerLog()
+	
 
 	database, err := sql.Open("sqlite3", "rowa.db")
 	if err != nil {
@@ -93,3 +96,5 @@ func main() {
 	e.Logger.Fatal(e.Start(":3000"))
 
 }
+
+
