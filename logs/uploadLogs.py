@@ -7,7 +7,7 @@ from botocore.exceptions import ClientError
 
 pathToNewLogs = './new/'
 pathToOldLogs = './old/'
-
+sleepTime = 60
 
 def internet_on():
     try:
@@ -42,6 +42,11 @@ def upload_file(file_name, bucket, object_name=None):
     return True
 
 def main():
+    dirs = os.listdir()
+    if not 'new' in dirs:
+        os.mkdir('new')
+    if not 'old' in dirs:
+        os.mkdir('old')
     while True:
         newLogsDirectory = os.fsencode(pathToNewLogs)
         oldLogsDirectory = os.fsencode(pathToOldLogs)
@@ -52,6 +57,6 @@ def main():
                 print('Uploading ' + filename)
                 upload_file(pathToNewLogs+ filename, 'rowa', 'logs/{}'.format(filename))
                 os.rename(pathToNewLogs + filename, pathToOldLogs + filename)
-            time.sleep(3)
+            time.sleep(sleepTime)
 if __name__ == "__main__":
     main()
