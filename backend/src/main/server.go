@@ -5,7 +5,6 @@ import (
 	
 	log "github.com/sirupsen/logrus"
 
-	"os"
 	"time"
 	"github.com/MarcelCode/ROWA/src/api"
 	"github.com/MarcelCode/ROWA/src/db"
@@ -15,6 +14,7 @@ import (
 	"github.com/MarcelCode/ROWA/src/util"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+	rotatelogs "github.com/lestrrat/go-file-rotatelogs"
 )
 
 
@@ -23,8 +23,7 @@ func main() {
 
 	
 	
-	util.LogNameIntervall()
-	go util.RunnerLog()
+	InitBackendLogger()
 	
 
 	database, err := sql.Open("sqlite3", "rowa.db")
@@ -54,12 +53,23 @@ func main() {
 	e.Use(middleware.CORS())
 
 
+
+
+
+	logf, err := rotatelogs.New(
+		"httprequest.%Y%m%d%H%M%S.log",
+		rotatelogs.WithMaxAge(24 * time.Hour),
+		rotatelogs.WithRotationTime(time.Hour*3),
+	  )
+	  if err != nil {
+		log.Printf("failed to create rotatelogs: %s", err)
+		return
+	  }
+
 	//make echo log all requests
-	var filename string = "logfile-httprequests-"+ time.Now().Format("2006-01-02") +".log"
-    f, err := os.OpenFile(filename, os.O_WRONLY | os.O_APPEND | os.O_CREATE, 0644)
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "method=${method}, uri=${uri}, status=${status}, error=${error}\n",
-		Output: f,
+		Output: logf,
 	  }))
 
 	// Routes
@@ -96,5 +106,36 @@ func main() {
 	e.Logger.Fatal(e.Start(":3000"))
 
 }
+
+
+func InitBackendLogger(){
+
+	logb, err := rotatelogs.New(
+		"backend.%Y%m%d%H%M%S.log",
+		rotatelogs.WithMaxAge(24 * time.Hour),
+		rotatelogs.WithRotationTime(time.Hour*3),
+	  )
+	  if err != nil {
+		log.Printf("failed to create rotatelogs: %s", err)
+		return
+	  }
+
+	Formatter := new(log.TextFormatter)
+    // You can change the Timestamp format. But you have to use the same date and time.
+    // "2006-02-02 15:04:06" Works. If you change any digit, it won't work
+    // ie "Mon Jan 2 15:04:05 MST 2006" is the reference time. You can't change it
+     Formatter.TimestampFormat = "02-01-2006 15:04:05"
+	Formatter.FullTimestamp = true
+	
+	log.SetFormatter(Formatter)
+    if err != nil {
+        // Cannot open log file. Logging to stderr
+        log.Println(err)
+    }else{
+        log.SetOutput(logb)
+	}
+
+}
+
 
 
