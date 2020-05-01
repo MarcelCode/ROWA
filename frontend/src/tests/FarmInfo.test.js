@@ -18,7 +18,7 @@ describe('FarmInfo',  () => {
   })
   
   // Inspect the raw component options
-  it('has a created hook', () => {
-     expect(shallowMount(FarmInfo).isVueInstance()).toBe(true)
+  it('has a created hook',() => {
+    expect(shallowMount(FarmInfo).isVueInstance()).toBe(true)
   })
 })
