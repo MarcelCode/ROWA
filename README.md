@@ -1,20 +1,12 @@
 # ROWA
 ## Requirements
-Node
-go
+Docker
 
 ## Installation 
-`npm install`
+In project folder:
+`./start.sh`
+(You might have to chmod first)
 
-## Backend
-`log into Rowas AWS via the Cli`
-
-`navigate into /backend/src/main`
-
-`go run server.go` 
-
-## Frontend
-`navigate into /frontend`
-
-`npm run serve`
+Then navigate to `localhost:8080`.
+Note that this version does not push anything to aws and thus is completely offline.
 

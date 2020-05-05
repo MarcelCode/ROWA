@@ -9,8 +9,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MarcelCode/ROWA/src/influx"
-
 	"github.com/tarm/serial"
 )
 
@@ -126,7 +124,7 @@ func ReadFakeSensorData() {
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
 	defer database.Close()
-	svc := influx.AwsInit()
+	//svc := influx.AwsInit()
 	for {
 		var s []float32
 		datetime := time.Now()
@@ -143,7 +141,7 @@ func ReadFakeSensorData() {
 		statement.Exec(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 
 		//Publishing to AWS here:
-		influx.AwsPublishInput(svc, s, datetime.Unix())
+		//influx.AwsPublishInput(svc, s, datetime.Unix())
 
 		time.Sleep(2 * time.Second)
 	}
@@ -152,7 +150,7 @@ func ReadFakeSensorData() {
 }
 func ReadSensorData() {
 	var serialString string
-	svc := influx.AwsInit()
+	//svc := influx.AwsInit()
 	s, _ := setupSerialConnection()
 	defer s.Close()
 
@@ -185,7 +183,7 @@ func ReadSensorData() {
 				if err1 == nil && err2 == nil && err4 == nil && err3 == nil && err5 == nil && err6 == nil {
 					fmt.Println(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 					//Writing to aws
-					influx.AwsPublishInput(svc, sl, datetime.Unix())
+					//influx.AwsPublishInput(svc, sl, datetime.Unix())
 					datetime := datetime.UTC().Format(time.RFC3339)
 					//Writing to local db
 					statement.Exec(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
