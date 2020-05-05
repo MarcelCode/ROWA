@@ -14,5 +14,5 @@ COPY --from=build-stage /go/src/github.com/ROWA/rowa-dev/backend/src/main/ ./ROW
 COPY --from=build-stage /go/src/github.com/ROWA/rowa-dev/backend/src/settings/ ./ROWA/settings
 RUN cd ROWA
 
-WORKDIR ${HOME}/ROWA
+WORKDIR ${HOME}/ROWA/main
 ENTRYPOINT [ "./server" ]
