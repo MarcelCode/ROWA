@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	
 	log "github.com/sirupsen/logrus"
-
+	"fmt"
 	"time"
 	"github.com/MarcelCode/ROWA/src/api"
 	"github.com/MarcelCode/ROWA/src/db"
@@ -14,7 +14,7 @@ import (
 	"github.com/MarcelCode/ROWA/src/util"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	rotatelogs "github.com/lestrrat/go-file-rotatelogs"
+	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 )
 
 
@@ -137,5 +137,8 @@ func InitBackendLogger(){
 
 }
 
+func MoveFile(Location string){
+	fmt.Println(Location)
+}
 
 
