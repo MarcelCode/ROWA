@@ -1,5 +1,5 @@
 import { createLocalVue, mount,shallowMount } from '@vue/test-utils'
-import InfoBoxPlants from '../components/home/InfoBoxPlants.vue'
+import InfoBoxPlants from '../src/components/home/InfoBoxPlants.vue'
 import vuetify from "vuetify"
 
 
@@ -39,6 +39,6 @@ describe('InfoxBoxPlants',  () => {
     expect(wrapper.text()).toContain('Basil 5')
     expect(wrapper.text()).toContain('Lettuce 0')
   })
-
+  
   
 })

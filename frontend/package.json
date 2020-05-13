@@ -53,7 +53,7 @@
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
     },
     "setupFilesAfterEnv": [
-      "<rootDir>src/tests/testSetup.js"
+      "<rootDir>/tests/testSetup.js"
     ]
   }
 }

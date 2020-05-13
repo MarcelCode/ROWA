@@ -1,8 +1,8 @@
 // Import `shallowMount` from Vue Test Utils and the component being tested
 import { createLocalVue, mount,shallowMount } from '@vue/test-utils'
-import FarmInfo from '../components/home/FarmInfo.vue'
-import FarmTransition from '../components/main/FarmTransition.vue'
-import InfoBoxPlants from '../components/home/InfoBoxPlants.vue'
+import FarmInfo from '../src/components/home/FarmInfo.vue'
+import FarmTransition from '../src/components/main/FarmTransition.vue'
+import InfoBoxPlants from '../src/components/home/InfoBoxPlants.vue'
 import vuetify from "vuetify"
 import axios from 'axios';
 
@@ -35,11 +35,17 @@ describe('FarmInfo',  () => {
     //wrapper.vm.harvestable = null
     wrapper = shallowMount(FarmInfo)
     console.log(wrapper.vm.harvestable)
-    const data = {
-      data: 1
+    const p1 = {
+      plant_type: 'Basil',
+      available_plants: 5
     }
+    let data = {
+      data:  [p1]
+    }
+
     axios.get.mockResolvedValue(data)
-    await wrapper.vm.$nextTick()
+
+    //await wrapper.vm.$nextTick()
     //axios.get.mockImplementationOnce(() => Promise.resolve(data));
     console.log(wrapper.vm.harvestable)
     //expect().toBe(5)
