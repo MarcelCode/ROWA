@@ -31,8 +31,8 @@
 
 <script>
     import axios from "axios"
-    import HomeTopRow from "@/components/main/HomeTopRow"
-    import FarmInfo from "@/components/home/FarmInfo";
+    import HomeTopRow from "../components/main/HomeTopRow"
+    import FarmInfo from "../components/home/FarmInfo";
     import {mapState} from "vuex"
     import CatTree from "../components/home/Farm/CatTree";
     import StatGraphic from "../components/home/Stats/StatGraphic";
