@@ -4,6 +4,7 @@ import FarmTransition from '../src/components/main/FarmTransition.vue'
 import InfoBoxPlants from '../src/components/home/InfoBoxPlants.vue'
 import vuetify from "vuetify"
 import axios from 'axios';
+import { mapState } from 'vuex'
 
 
 jest.mock('axios');
