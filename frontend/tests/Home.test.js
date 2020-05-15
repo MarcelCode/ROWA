@@ -13,6 +13,7 @@ describe('Home',  () => {
   let wrapper;
   let store;
   let localVue
+  let data;
   beforeEach(() => {
     localVue =  createLocalVue()
     localVue.use(vuetify)
@@ -34,11 +35,10 @@ describe('Home',  () => {
     expect(wrapper.contains(FarmInfo)).toBe(true)
     expect(wrapper.contains(HomeTopRow)).toBe(true)
     expect(wrapper.contains(CatTree)).toBe(true)
-    //expect(wrapper.contains(StatGraphic)).toBe(true)
   })
 
   it('returns the right sensor data', async()=>{
-    let data = {
+    data = {
       data: [{
       datetime: null,
       temperature: 22,
@@ -48,8 +48,23 @@ describe('Home',  () => {
     axios.get.mockResolvedValue(data)
     wrapper = shallowMount(Home, {store, localVue})
     await wrapper.vm.$nextTick()
-    console.log(data.data[0])
     expect(wrapper.vm.sensor_data.temperature).toEqual(22)
+    expect(wrapper.vm.sensor_data.light_intensity).toEqual(150)
+  })
+
+  it('sets the right interval', async() => {
+    data = {
+      data: [{
+      datetime: null,
+      temperature: 22,
+      light_intensity: 150
+    }]
+    }
+    axios.get.mockResolvedValue(data)
+    wrapper = shallowMount(Home, {store, localVue})
+    await wrapper.vm.$nextTick()
+    wrapper.vm.getIntervalData()
+    expect(wrapper.vm.interval).toEqual(15)
   })
   
 })

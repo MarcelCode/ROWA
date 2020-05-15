@@ -68,7 +68,6 @@
                 axios.get("http://127.0.0.1:3000/dashboard/sensor-data")
                     .then(result => {
                         this.sensor_data = result.data[0]
-                        console.log(this.sensor_data)
                     })
                     .catch(error => {
                         console.log(error)
