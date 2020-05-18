@@ -56,8 +56,7 @@
     },
     "collectCoverage": false,
     "collectCoverageFrom": [
-      "**/*.{js,vue}",
-      "!**/node_modules/**"
+      "**/src/**/*.{js,vue}"
     ],
     "setupFilesAfterEnv": [
       "<rootDir>/tests/testSetup.js"

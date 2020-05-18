@@ -4,7 +4,6 @@ import Vuex, { mapState } from 'vuex'
 import HomeTopRow from "../src/components/main/HomeTopRow"
 import FarmInfo from "../src/components/home/FarmInfo";
 import CatTree from "../src/components/home/Farm/CatTree";
-import StatGraphic from "../src/components/home/Stats/StatGraphic";
 import Home from '../src/views/Home.vue'
 import axios from 'axios';
 
