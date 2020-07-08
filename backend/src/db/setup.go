@@ -116,6 +116,14 @@ func (store *Database) DbSetup() (err error) {
 	return
 }
 
+func (store *Database) CreateTimerEntry(startTime string, endTime string, state int) (err error){
+	statement, _ := store.Db.Prepare("INSERT INTO TimeTable (TimeName, OnTime, OffTime, CurrentState) VALUES (?, ?, ?, ?)")
+	statement.Exec("Light", startTime, endTime, state)
+	//statement.Exec("Pump", "16:42", "00:00", 5)
+
+	return
+}
+
 func (store *Database) CreatePlantTypes() (err error) {
 	statement, _ := store.Db.Prepare("INSERT INTO PlantType (Name, Growthtime) VALUES (?, ?)")
 

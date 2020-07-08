@@ -1,9 +1,9 @@
 package main_test
 
 import (
-	"api"
+	"github.com/MarcelCode/ROWA/src/api"
 	"database/sql"
-	"db"
+	"github.com/MarcelCode/ROWA/src/db"
 	"encoding/json"
 	"github.com/labstack/echo"
 	_ "github.com/mattn/go-sqlite3"
@@ -37,7 +37,7 @@ func TestSensorDataStatus(t *testing.T) {
 func TestSensorData(t *testing.T) {
 	c, rec := InitialiseTestServer(http.MethodGet, "/dashboard/sensor-data")
 
-	expected := &db.SensorData{Datetime: "2019-11-18T19:00:00Z", Temp: 23, LightIntensity: 123}
+	expected := &db.SensorData{Datetime: "2020-05-18T15:15:36Z", Temp: 23, LightIntensity: 123}
 	if assert.NoError(t, api.GetSensorDataHandler(c)) {
 		requestBody := &db.SensorData{}
 		err := json.NewDecoder(rec.Body).Decode(&requestBody)
@@ -59,7 +59,7 @@ func TestGetHarvestablePlantsStatus(t *testing.T) {
 func TestGetHarvestablePlantsData(t *testing.T) {
 	c, rec := InitialiseTestServer(http.MethodGet, "/dashboard/harvestable-plants")
 
-	expected := []*db.PlantsPerPlantType{{"Basil", 2}, {"Lettuce", 2}}
+	expected := []*db.PlantsPerPlantType{{"Basil", 1}, {"Lettuce", 1}}
 
 	if assert.NoError(t, api.GetHarvestablePlantsHandler(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)

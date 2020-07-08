@@ -29,17 +29,18 @@ func (s *StoreSuite) TestHarvestDone() {
 	s.store.CreateModuleWithPlants(2, "Lettuce")
 
 	harvestDone, err := s.store.HarvestDone(&PositionOnFarm{6, 1})
+	harvestDone2, _ := s.store.HarvestDone(&PositionOnFarm{6, 2})
 	if err != nil {
 		s.T().Fatal(err)
 	}
 	expected := &Status{"harvest done"}
-	assert.Equal(s.T(), harvestDone, expected)
+	assert.Equal(s.T(), harvestDone, expected,harvestDone2)
 
 	plantablePlants, err := s.store.GetPlantsPerType("plantable")
 	if err != nil {
 		s.T().Fatal(err)
 	}
 
-	dbChange := []*PlantsPerPlantType{{"Basil", 1}, {"Lettuce", 0}}
-	assert.Equal(s.T(), plantablePlants, dbChange)
+	dbChange := []*PlantsPerPlantType{{"Basil", 1}, {"Lettuce", 1}}
+	assert.Equal(s.T(),dbChange, plantablePlants)
 }

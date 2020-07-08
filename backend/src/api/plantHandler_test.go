@@ -53,3 +53,27 @@ func TestFinishPlantingHandler(t *testing.T) {
 
 	mockStore.AssertExpectations(t)
 }
+
+
+func TestMassPlantingHandler(t *testing.T) {
+	mockStore := db.InitMockStore()
+	mockStore.On("MassPlanting", &db.PlantedModules{}).Return(
+		&db.Status{Message: "Planting Done"}, nil).Once()
+
+	c, rec := InitialiseTestServer(http.MethodPost, "/plant/plant-all")
+
+	expected := &db.Status{Message: "Planting Done"}
+
+	if assert.NoError(t, MassPlantingHandler(c)) {
+		assert.Equal(t, http.StatusOK, rec.Code)
+
+		var requestBody *db.Status
+		err := json.NewDecoder(rec.Body).Decode(&requestBody)
+		if err != nil {
+			t.Fatal(err)
+		}
+		assert.Equal(t, expected, requestBody)
+	}
+
+	mockStore.AssertExpectations(t)
+}
