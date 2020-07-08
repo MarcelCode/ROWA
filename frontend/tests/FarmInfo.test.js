@@ -32,7 +32,7 @@ describe('FarmInfo',  () => {
     expect(wrapper.contains(InfoBoxPlants)).toBe(true)
   })
 
-  it('displays the correct amount of harvestable plants', async() => {    
+  it('saves the correct amount of harvestable plants', async() => {    
     let data = {
       data:  [plant({t:'Test',n:5}), plant({t:'Flower', n:1})]
     }
@@ -44,7 +44,7 @@ describe('FarmInfo',  () => {
     expect(wrapper.vm.harvestable.length).toBe(2)
   })
 
-  it('displays the correct amount of plantable plants', async() => {
+  it('saves the correct amount of plantable plants', async() => {
     let data = {
       data:  [plant({t:'Test',n:5})]
     }
