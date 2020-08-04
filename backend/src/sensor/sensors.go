@@ -26,25 +26,7 @@ func SetupSerialConnection() (s *serial.Port, err error) {
 		log.Print(err)
 		return
 	}
-
 	return s, err
-
-	/*// Set up options.
-	options := serial.OpenOptions{
-		PortName:        "COM5",
-		BaudRate:        9600,
-		DataBits:        8,
-		StopBits:        1,
-		MinimumReadSize: 4,
-	}
-
-	// Open the port.
-	port, err = serial.Open(options)
-	if err != nil {
-		log.Printf("serial.Open: %v", err)
-	}
-
-	return port, err*/
 }
 
 func ActivateModuleLight(moduleNumber int) {
