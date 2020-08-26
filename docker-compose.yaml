@@ -1,53 +1,67 @@
-version: '3.8'
+version: "3.8"
 services:
-
   rowa-backend:
     image: emilsallem/rowa-backend:dev-latest
     container_name: backend
     ports:
       - 3000:3000
     #devices:
-      #- "/dev/ttyACM0:/dev/ttyACM0"
+    #- "/dev/ttyACM0:/dev/ttyACM0"
     environment:
       - TZ="Europe/Berlin"
     volumes:
-      -  "${pwd}/backend/src/main/rowa.db:/ROWA/rowa.db"
-  
-   
+      - "${pwd}/backend/src/main/rowa.db:/ROWA/rowa.db"
+    links:
+      - fluentd
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+
   rowa-frontend:
     image: emilsallem/rowa-frontend:dev-latest
     container_name: frontend
     ports:
       - 8080:80
+    links:
+      - fluentd
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224      
+      
+
   watchtower:
     image: containrrr/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /root/.docker/config.json:/config.json
-      
+
     command: --interval 120 --debug
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: prometheus
-    ports:
-      - 9090:9090
-    command:
-      - --config.file=/etc/prometheus/prometheus.yml
+
+  fluentd:
+    build: ./fluentd
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
-    depends_on:
-      - cadvisor
-  cadvisor:
-    image: gcr.io/google-containers/cadvisor:latest
-    container_name: cadvisor
+      - ./fluentd/conf:/fluentd/etc
+    links:
+      - "elasticsearch"
     ports:
-      - 8081:8080
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-    depends_on:
-      - rowa-frontend
-      - rowa-backend
-      
+      - "24224:24224"
+      - "24224:24224/udp"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
+    environment:
+      - "discovery.type=single-node"
+    expose:
+    expose:
+      - "9200"
+    ports:
+      - "9200:9200"
+
+  kibana:
+    image: kibana:7.8.1
+    links:
+      - "elasticsearch"
+    ports:
+      - "5601:5601"
