@@ -96,11 +96,13 @@ func ReadFakeSensorData() {
 		temp := rand.Float32()*1 + 22
 		lightIntensity := rand.Float32()*1 + 35
 		humidity := rand.Float32()*10 + 30
-		waterLevel := rand.Float32()*4 + 19
+		waterLevel := rand.Float64()*4 + 13
 		waterTemp := rand.Float32()*1 + 22
 		waterpH := rand.Float32() + 6
 		datetimeStr := datetime.UTC().Format(time.RFC3339)
 		fmt.Println(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+		//Sending notification
+		CheckReadings(datetime, waterLevel)
 		statement.Exec(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 
 		time.Sleep(2 * time.Second)
@@ -137,9 +139,12 @@ func ReadSensorData(s *serial.Port) {
 				waterpH, err6 := strconv.ParseFloat(data_array[5], 32)
 				if err1 == nil && err2 == nil && err4 == nil && err3 == nil && err5 == nil && err6 == nil {
 					//log.Println(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+					//Sending notification
+					CheckReadings(datetime, waterLevel)
 					datetime := datetime.UTC().Format(time.RFC3339)
 					//Writing to local db
 					statement.Exec(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+					
 				}
 
 			}
