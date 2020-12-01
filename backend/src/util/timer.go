@@ -7,6 +7,8 @@ import (
 	"strings"
 	"time"
 
+	log "github.com/sirupsen/logrus"
+
 	"github.com/MarcelCode/ROWA/src/sensor"
 	"github.com/jasonlvhit/gocron"
 )
@@ -139,9 +141,9 @@ func PumpTimesRenew() {
 	aOn := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), BubbleOnHour, BubbleOnMinute, 0, 0, time.Local)
 	tOn := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), TimeOnHour, TimeOnMinute, 0, 0, time.Local)
 	tOff := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), TimeOffHour, TimeOffMinute, 0, 0, time.Local)
-	fmt.Println(BubbleOn)
-	fmt.Println(restartTime.TimeOn)
-	fmt.Println(restartTime.TimeOff)
+	log.Print("Bubbler time changed to:" + BubbleOn)
+	log.Print("Pump time changed to:" + restartTime.TimeOn)
+	log.Print("Pump+bubbler off time changed to:" + restartTime.TimeOff)
 	//Air Stone On
 	light.Every(1).Day().At(BubbleOn).From(&aOn).Do(sensor.TriggerAirStone, true)
 	//Pump On

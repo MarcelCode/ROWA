@@ -1,8 +1,9 @@
 package db
 
 import (
-	"log"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type SensorData struct {
@@ -10,9 +11,9 @@ type SensorData struct {
 	Temp           float64 `json:"temperature"`
 	LightIntensity float64 `json:"light_intensity"`
 	Humidity       float64 `json:"humidity"`
-	WaterLevel     float64 `json:"water_level"`   
+	WaterLevel     float64 `json:"water_level"`
 	WaterTemp      float64 `json:"water_temp"`
-    WaterpH        float64 `json:"water_ph"`
+	WaterpH        float64 `json:"water_ph"`
 }
 
 type PlantsPerPlantType struct {
@@ -38,7 +39,7 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 					where Harvested = 0
 					  and date(PlantDate, '+' || GrowthTime || ' days') <= date('now')
 					GROUP BY PlantType`
-					rows, err := store.Db.Query(sqlQuery)
+		rows, err := store.Db.Query(sqlQuery)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -59,12 +60,12 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 			rows.Next()
 			var id int
 			rows.Scan(&id)
-			
+
 			if err != nil {
 				log.Fatal(err)
 			}
 			rows.Close()
-			
+
 			sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlants
 						FROM Plant
 								INNER JOIN Module M on Plant.Module = M.Id
@@ -72,7 +73,7 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 						WHERE Harvested = 0
 						AND M.Id = ?
 						AND date(PlantDate, '+' || 7 || ' days') <= date('now')`
-			
+
 			rows, err = store.Db.Query(sqlQuery, i)
 			if err != nil {
 				log.Fatal(err)
@@ -84,16 +85,14 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 				if err != nil {
 					log.Fatal(err)
 				}
-			
+
 				if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
 					p, found := find(plantsToHarvest, plantsPerPlantType.Name)
 					if found {
 						plantsToHarvest[p].AvailablePlants++
-						log.Print(plantsPerPlantType)
 					} else {
 						plantsPerPlantType.AvailablePlants = 1
 						plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
-						log.Print(plantsPerPlantType)
 					}
 
 				}
@@ -170,7 +169,7 @@ func (store *Database) GetCatTreeData(module int) (plantInfo []*PlantInfoPerModu
 		}
 		plantInfo = append(plantInfo, plantInfoPerModule)
 	}
-	
+
 	return plantInfo, err
 
 }

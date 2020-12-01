@@ -24,13 +24,14 @@ services:
       - 8080:80
     logging:
       driver: "local"
+
   watchtower:
     image: containrrr/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /root/.docker/config.json:/config.json
       
-    command: --interval 3600 --debug
+    command: --interval 3600
     
   telegraf:
     image: telegraf

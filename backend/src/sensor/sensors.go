@@ -3,13 +3,13 @@ package sensor
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"math/rand"
 	"strconv"
 	"strings"
 	"time"
 
-	//"github.com/jacobsa/go-serial/serial"
+	log "github.com/sirupsen/logrus"
+
 	"github.com/tarm/serial"
 )
 
@@ -23,7 +23,7 @@ func SetupSerialConnection() (s *serial.Port, err error) {
 	c := &serial.Config{Name: "/dev/ttyACM0", Baud: 9600}
 	s, err = serial.OpenPort(c)
 	if err != nil {
-		log.Print(err)
+		log.Error(err)
 		return
 	}
 
@@ -42,10 +42,8 @@ func TriggerPump(state bool) {
 
 	if state {
 		WriteToCh("90")
-		fmt.Println("Pump on")
 	} else {
 		WriteToCh("91")
-		fmt.Println("Pump off")
 	}
 
 }
@@ -53,10 +51,8 @@ func TriggerPump(state bool) {
 func TriggerAirStone(state bool) {
 	if state {
 		WriteToCh("70")
-		fmt.Println("Airstone on")
 	} else {
 		WriteToCh("71")
-		fmt.Println("Airstone off")
 	}
 }
 
@@ -65,12 +61,9 @@ func DeactivateModuleLight() {
 }
 
 func LightSwitch(state bool) {
-	fmt.Println("Light switch triggered")
-
 	//send turn off or on to arduino
 	if state {
 		WriteToCh("80")
-		fmt.Println("Light on")
 		//change DB light State
 		database, _ := sql.Open("sqlite3", "./rowa.db")
 		statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 1 WHERE ID = 1")
@@ -78,7 +71,6 @@ func LightSwitch(state bool) {
 		database.Close()
 	} else {
 		WriteToCh("81")
-		fmt.Println("Light off")
 		//change DB light State
 		database, _ := sql.Open("sqlite3", "./rowa.db")
 		statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 0 WHERE ID = 1")
