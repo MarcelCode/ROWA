@@ -1,0 +1,293 @@
+[2020-12-07T11:07:03.248Z][INFO]-===========================================
+[2020-12-07T11:07:03.248Z][INFO]-Greengrass Version: 1.11.0-RC2
+[2020-12-07T11:07:03.248Z][INFO]-Greengrass Root: /greengrass
+[2020-12-07T11:07:03.248Z][INFO]-Greengrass Write Directory: /greengrass/ggc
+[2020-12-07T11:07:03.248Z][INFO]-Group File Directory: /greengrass/ggc/deployment/group
+[2020-12-07T11:07:03.248Z][INFO]-Default Lambda UID: 122
+[2020-12-07T11:07:03.248Z][INFO]-Default Lambda GID: 121
+[2020-12-07T11:07:03.248Z][DEBUG]-Go version: go1.12.11
+[2020-12-07T11:07:03.248Z][DEBUG]-CoreThing Connection Config: 
+{
+	"Region": "eu-central-1",
+	"ThingArn": "arn:aws:iot:eu-central-1:294705358569:thing/farms_Core",
+	"IoTMQTTEndpoint": "arig5vtggzkh-ats.iot.eu-central-1.amazonaws.com:8883",
+	"IoTHTTPEndpoint": "arig5vtggzkh-ats.iot.eu-central-1.amazonaws.com:8443",
+	"GGMQTTPort": 8883,
+	"GGHTTPEndpoint": "greengrass-ats.iot.eu-central-1.amazonaws.com:8443",
+	"GGDaemonPort": 8000,
+	"GGMQTTKeepAlive": 600,
+	"GGMQTTMaxConnectionRetryInterval": 60,
+	"GGMQTTConnectTimeout": 30,
+	"GGMQTTPingTimeout": 30,
+	"GGMQTTOperationTimeout": 5,
+	"GGHTTPTimeout": 60,
+	"FIPSMode": false,
+	"CoreClientId": ""
+}
+[2020-12-07T11:07:03.248Z][DEBUG]-System Config: 
+{
+	"tmpDirectory": "",
+	"shadowSyncTimeout": 0,
+	"useOverlayWithTmpfs": false,
+	"disablePivotRoot": false
+}
+[2020-12-07T11:07:03.248Z][DEBUG]-Runtime Config: 
+{
+	"maxWorkItemCount": 1024,
+	"schedulingFrequency": 1000,
+	"maxConcurrentLimit": 25,
+	"lruSize": 25,
+	"cgroup": {
+		"useSystemd": true,
+		"mountPoint": null
+	},
+	"postStartHealthCheckTimeout": 60000,
+	"allowFunctionsToRunAsRoot": false,
+	"onSystemComponentsFailure": 0,
+	"systemComponentAuthTimeout": 5000,
+	"mountAllBlockDevices": false
+}
+[2020-12-07T11:07:03.248Z][INFO]-===========================================
+[2020-12-07T11:07:03.258Z][DEBUG]-[3]Requested certificate load [file:///greengrass/certs/2c60b5d3dc.cert.pem] with error: [<nil>]
+[2020-12-07T11:07:03.258Z][INFO]-The current core is using the AWS IoT certificates with fingerprint.	{"fingerprint": "2c60b5d3dc0ae6d7155f0e4c24e7b17b45fbedc7965277344308cc492a18e511"}
+[2020-12-07T11:07:03.258Z][INFO]-Will persist worker process info.	{"dir": "/greengrass/ggc/packages/1.11.0/var/worker/processes"}
+[2020-12-07T11:07:03.259Z][INFO]-Will persist worker process info.	{"dir": "/greengrass/ggc/packages/1.11.0/var/worker/processes"}
+[2020-12-07T11:07:03.26Z][DEBUG]-loading subscriptions	{"trie": "map[]"}
+[2020-12-07T11:07:03.261Z][INFO]-No proxy URL found.
+[2020-12-07T11:07:03.27Z][DEBUG]-Reloading function registry.
+[2020-12-07T11:07:03.272Z][DEBUG]-[3]Requested certificate load [file:///greengrass/certs/root.ca.pem] with error: [<nil>]
+[2020-12-07T11:07:03.282Z][DEBUG]-[3]Requested key load [file:///greengrass/certs/2c60b5d3dc.private.key] with error: [<nil>]
+[2020-12-07T11:07:03.292Z][DEBUG]-[3]Requested certificate load [file:///greengrass/certs/2c60b5d3dc.cert.pem] with error: [<nil>]
+[2020-12-07T11:07:03.292Z][INFO]-No proxy URL found.
+[2020-12-07T11:07:03.293Z][DEBUG]-[3]Requested certificate load [file:///greengrass/certs/2c60b5d3dc.cert.pem] with error: [<nil>]
+[2020-12-07T11:07:03.293Z][INFO]-The current core is using the AWS IoT certificates with fingerprint.	{"fingerprint": "2c60b5d3dc0ae6d7155f0e4c24e7b17b45fbedc7965277344308cc492a18e511"}
+[2020-12-07T11:07:03.294Z][INFO]-Connecting with MQTT.	{"endpoint": "arig5vtggzkh-ats.iot.eu-central-1.amazonaws.com:8883", "clientId": "farms_Core"}
+[2020-12-07T11:07:03.294Z][DEBUG]-MQTT connection attempt.	{"attemptId": "wHsI", "clientId": "farms_Core"}
+[2020-12-07T11:07:03.294Z][DEBUG]-New MQTT connection attempt
+[2020-12-07T11:07:03.294Z][DEBUG]-Acquired lock for connection attempt
+[2020-12-07T11:07:03.294Z][DEBUG]-Disconnect client	{"force": false}
+[2020-12-07T11:07:03.553Z][DEBUG]-Connection request is valid
+[2020-12-07T11:07:03.553Z][DEBUG]-Finished connection attempt, waiting for OnConnect Handler
+[2020-12-07T11:07:03.553Z][DEBUG]-Releasing lock for connection attempt
+[2020-12-07T11:07:03.553Z][INFO]-MQTT connection successful.	{"attemptId": "wHsI", "clientId": "farms_Core"}
+[2020-12-07T11:07:03.553Z][INFO]-MQTT connection established.	{"endpoint": "arig5vtggzkh-ats.iot.eu-central-1.amazonaws.com:8883", "clientId": "farms_Core"}
+[2020-12-07T11:07:03.553Z][DEBUG]-Handle new connection event
+[2020-12-07T11:07:03.554Z][DEBUG]-Acquired lock for new connection event
+[2020-12-07T11:07:03.554Z][DEBUG]-Update status to connected
+[2020-12-07T11:07:03.554Z][DEBUG]-Releasing lock for new connection event
+[2020-12-07T11:07:03.554Z][DEBUG]-Entering OnConnect.	{"clientId": "farms_Core", "count": 1}
+[2020-12-07T11:07:03.554Z][INFO]-MQTT connection connected. Start subscribing.	{"clientId": "farms_Core", "count": 1}
+[2020-12-07T11:07:03.554Z][INFO]-Daemon connected to cloud.
+[2020-12-07T11:07:03.554Z][DEBUG]-Subscribe retry configuration.	{"IntervalInSeconds": 60, "count": 1}
+[2020-12-07T11:07:03.554Z][INFO]-Start subscribing.	{"numOfTopics": 5, "clientId": "farms_Core"}
+[2020-12-07T11:07:03.554Z][INFO]-Trying to subscribe to topic $aws/things/farms_Core-gcf/shadow/update/delta
+[2020-12-07T11:07:03.554Z][DEBUG]-Subscribe	{"topic": "$aws/things/farms_Core-gcf/shadow/update/delta", "qos": 0}
+[2020-12-07T11:07:03.6Z][DEBUG]-Subscribed to topic.	{"topic": "$aws/things/farms_Core-gcf/shadow/update/delta"}
+[2020-12-07T11:07:03.6Z][INFO]-Trying to subscribe to topic $aws/things/farms_Core-gda/shadow/get/accepted
+[2020-12-07T11:07:03.6Z][DEBUG]-Subscribe	{"topic": "$aws/things/farms_Core-gda/shadow/get/accepted", "qos": 0}
+[2020-12-07T11:07:03.659Z][DEBUG]-Subscribed to topic.	{"topic": "$aws/things/farms_Core-gda/shadow/get/accepted"}
+[2020-12-07T11:07:03.659Z][DEBUG]-Publish	{"topic": "$aws/things/farms_Core-gda/shadow/get", "qos": 1}
+[2020-12-07T11:07:03.678Z][INFO]-Trying to subscribe to topic $aws/things/farms_Core-gda/shadow/update/delta
+[2020-12-07T11:07:03.678Z][DEBUG]-Subscribe	{"topic": "$aws/things/farms_Core-gda/shadow/update/delta", "qos": 0}
+[2020-12-07T11:07:03.729Z][DEBUG]-Subscribed to topic.	{"topic": "$aws/things/farms_Core-gda/shadow/update/delta"}
+[2020-12-07T11:07:03.729Z][INFO]-Trying to subscribe to topic $aws/things/farms_Core-gcf/shadow/get/rejected
+[2020-12-07T11:07:03.729Z][DEBUG]-Subscribe	{"topic": "$aws/things/farms_Core-gcf/shadow/get/rejected", "qos": 0}
+[2020-12-07T11:07:03.82Z][DEBUG]-Subscribed to topic.	{"topic": "$aws/things/farms_Core-gcf/shadow/get/rejected"}
+[2020-12-07T11:07:03.82Z][INFO]-Trying to subscribe to topic $aws/things/farms_Core-gcf/shadow/get/accepted
+[2020-12-07T11:07:03.82Z][DEBUG]-Subscribe	{"topic": "$aws/things/farms_Core-gcf/shadow/get/accepted", "qos": 0}
+[2020-12-07T11:07:03.87Z][DEBUG]-Subscribed to topic.	{"topic": "$aws/things/farms_Core-gcf/shadow/get/accepted"}
+[2020-12-07T11:07:03.87Z][DEBUG]-Publish	{"topic": "$aws/things/farms_Core-gcf/shadow/get", "qos": 1}
+[2020-12-07T11:07:03.891Z][INFO]-All topics subscribed.	{"clientId": "farms_Core"}
+[2020-12-07T11:07:03.909Z][DEBUG]-Report config update to the topic	{"topic": "$aws/things/farms_Core-gcf/shadow/update", "data": "{\"state\":{\"reported\":{\"telemetryConfiguration\":{\"publishIntervalSeconds\":86400,\"aggregationIntervalSeconds\":3600}},\"desired\":{\"telemetryConfiguration\":{\"publishIntervalSeconds\":86400,\"aggregationIntervalSeconds\":3600}}}}"}
+[2020-12-07T11:07:03.909Z][DEBUG]-Publish	{"topic": "$aws/things/farms_Core-gcf/shadow/update", "qos": 1}
+[2020-12-07T11:20:35.662Z][INFO]-===========================================
+[2020-12-07T11:20:35.662Z][INFO]-Greengrass Version: 1.11.0-RC2
+[2020-12-07T11:20:35.662Z][INFO]-Greengrass Root: /greengrass
+[2020-12-07T11:20:35.662Z][INFO]-Greengrass Write Directory: /greengrass/ggc
+[2020-12-07T11:20:35.662Z][INFO]-Group File Directory: /greengrass/ggc/deployment/group
+[2020-12-07T11:20:35.662Z][INFO]-Default Lambda UID: 122
+[2020-12-07T11:20:35.663Z][INFO]-Default Lambda GID: 121
+[2020-12-07T11:20:35.663Z][DEBUG]-Go version: go1.12.11
+[2020-12-07T11:20:35.663Z][DEBUG]-CoreThing Connection Config: 
+{
+	"Region": "eu-central-1",
+	"ThingArn": "arn:aws:iot:eu-central-1:294705358569:thing/farms_Core",
+	"IoTMQTTEndpoint": "arig5vtggzkh-ats.iot.eu-central-1.amazonaws.com:8883",
+	"IoTHTTPEndpoint": "arig5vtggzkh-ats.iot.eu-central-1.amazonaws.com:8443",
+	"GGMQTTPort": 8883,
+	"GGHTTPEndpoint": "greengrass-ats.iot.eu-central-1.amazonaws.com:8443",
+	"GGDaemonPort": 8000,
+	"GGMQTTKeepAlive": 600,
+	"GGMQTTMaxConnectionRetryInterval": 60,
+	"GGMQTTConnectTimeout": 30,
+	"GGMQTTPingTimeout": 30,
+	"GGMQTTOperationTimeout": 5,
+	"GGHTTPTimeout": 60,
+	"FIPSMode": false,
+	"CoreClientId": ""
+}
+[2020-12-07T11:20:35.663Z][DEBUG]-System Config: 
+{
+	"tmpDirectory": "",
+	"shadowSyncTimeout": 0,
+	"useOverlayWithTmpfs": false,
+	"disablePivotRoot": false
+}
+[2020-12-07T11:20:35.663Z][DEBUG]-Runtime Config: 
+{
+	"maxWorkItemCount": 1024,
+	"schedulingFrequency": 1000,
+	"maxConcurrentLimit": 25,
+	"lruSize": 25,
+	"cgroup": {
+		"useSystemd": true,
+		"mountPoint": null
+	},
+	"postStartHealthCheckTimeout": 60000,
+	"allowFunctionsToRunAsRoot": false,
+	"onSystemComponentsFailure": 0,
+	"systemComponentAuthTimeout": 5000,
+	"mountAllBlockDevices": false
+}
+[2020-12-07T11:20:35.663Z][INFO]-===========================================
+[2020-12-07T11:20:35.672Z][DEBUG]-[3]Requested certificate load [file:///greengrass/certs/2c60b5d3dc.cert.pem] with error: [<nil>]
+[2020-12-07T11:20:35.672Z][INFO]-The current core is using the AWS IoT certificates with fingerprint.	{"fingerprint": "2c60b5d3dc0ae6d7155f0e4c24e7b17b45fbedc7965277344308cc492a18e511"}
+[2020-12-07T11:20:35.673Z][INFO]-Will persist worker process info.	{"dir": "/greengrass/ggc/packages/1.11.0/var/worker/processes"}
+[2020-12-07T11:20:35.676Z][INFO]-Will persist worker process info.	{"dir": "/greengrass/ggc/packages/1.11.0/var/worker/processes"}
+[2020-12-07T11:20:35.677Z][DEBUG]-loading subscriptions	{"trie": "map[]"}
+[2020-12-07T11:20:35.677Z][INFO]-No proxy URL found.
+[2020-12-07T11:20:35.687Z][DEBUG]-Reloading function registry.
+[2020-12-07T11:20:35.688Z][DEBUG]-[3]Requested certificate load [file:///greengrass/certs/root.ca.pem] with error: [<nil>]
+[2020-12-07T11:20:35.699Z][DEBUG]-[3]Requested key load [file:///greengrass/certs/2c60b5d3dc.private.key] with error: [<nil>]
+[2020-12-07T11:20:35.708Z][DEBUG]-[3]Requested certificate load [file:///greengrass/certs/2c60b5d3dc.cert.pem] with error: [<nil>]
+[2020-12-07T11:20:35.708Z][INFO]-The current core is using the AWS IoT certificates with fingerprint.	{"fingerprint": "2c60b5d3dc0ae6d7155f0e4c24e7b17b45fbedc7965277344308cc492a18e511"}
+[2020-12-07T11:20:35.709Z][DEBUG]-[3]Requested certificate load [file:///greengrass/certs/2c60b5d3dc.cert.pem] with error: [<nil>]
+[2020-12-07T11:20:35.71Z][INFO]-No proxy URL found.
+[2020-12-07T11:20:35.712Z][INFO]-Connecting with MQTT.	{"endpoint": "arig5vtggzkh-ats.iot.eu-central-1.amazonaws.com:8883", "clientId": "farms_Core"}
+[2020-12-07T11:20:35.712Z][DEBUG]-MQTT connection attempt.	{"attemptId": "cOhj", "clientId": "farms_Core"}
+[2020-12-07T11:20:35.712Z][DEBUG]-New MQTT connection attempt
+[2020-12-07T11:20:35.712Z][DEBUG]-Acquired lock for connection attempt
+[2020-12-07T11:20:35.712Z][DEBUG]-Disconnect client	{"force": false}
+[2020-12-07T11:20:35.959Z][DEBUG]-Connection request is valid
+[2020-12-07T11:20:35.959Z][DEBUG]-Finished connection attempt, waiting for OnConnect Handler
+[2020-12-07T11:20:35.959Z][DEBUG]-Releasing lock for connection attempt
+[2020-12-07T11:20:35.959Z][INFO]-MQTT connection successful.	{"attemptId": "cOhj", "clientId": "farms_Core"}
+[2020-12-07T11:20:35.959Z][INFO]-MQTT connection established.	{"endpoint": "arig5vtggzkh-ats.iot.eu-central-1.amazonaws.com:8883", "clientId": "farms_Core"}
+[2020-12-07T11:20:35.959Z][DEBUG]-Handle new connection event
+[2020-12-07T11:20:35.959Z][DEBUG]-Acquired lock for new connection event
+[2020-12-07T11:20:35.959Z][DEBUG]-Update status to connected
+[2020-12-07T11:20:35.959Z][DEBUG]-Releasing lock for new connection event
+[2020-12-07T11:20:35.959Z][DEBUG]-Entering OnConnect.	{"clientId": "farms_Core", "count": 1}
+[2020-12-07T11:20:35.959Z][INFO]-MQTT connection connected. Start subscribing.	{"clientId": "farms_Core", "count": 1}
+[2020-12-07T11:20:35.959Z][INFO]-Daemon connected to cloud.
+[2020-12-07T11:20:35.959Z][DEBUG]-Subscribe retry configuration.	{"IntervalInSeconds": 60, "count": 1}
+[2020-12-07T11:20:35.959Z][INFO]-Start subscribing.	{"numOfTopics": 5, "clientId": "farms_Core"}
+[2020-12-07T11:20:35.959Z][INFO]-Trying to subscribe to topic $aws/things/farms_Core-gda/shadow/get/accepted
+[2020-12-07T11:20:35.959Z][DEBUG]-Subscribe	{"topic": "$aws/things/farms_Core-gda/shadow/get/accepted", "qos": 0}
+[2020-12-07T11:20:36.006Z][DEBUG]-Subscribed to topic.	{"topic": "$aws/things/farms_Core-gda/shadow/get/accepted"}
+[2020-12-07T11:20:36.006Z][DEBUG]-Publish	{"topic": "$aws/things/farms_Core-gda/shadow/get", "qos": 1}
+[2020-12-07T11:20:36.031Z][INFO]-Trying to subscribe to topic $aws/things/farms_Core-gda/shadow/update/delta
+[2020-12-07T11:20:36.031Z][DEBUG]-Subscribe	{"topic": "$aws/things/farms_Core-gda/shadow/update/delta", "qos": 0}
+[2020-12-07T11:20:36.076Z][DEBUG]-Subscribed to topic.	{"topic": "$aws/things/farms_Core-gda/shadow/update/delta"}
+[2020-12-07T11:20:36.076Z][INFO]-Trying to subscribe to topic $aws/things/farms_Core-gcf/shadow/get/rejected
+[2020-12-07T11:20:36.076Z][DEBUG]-Subscribe	{"topic": "$aws/things/farms_Core-gcf/shadow/get/rejected", "qos": 0}
+[2020-12-07T11:20:36.144Z][DEBUG]-Subscribed to topic.	{"topic": "$aws/things/farms_Core-gcf/shadow/get/rejected"}
+[2020-12-07T11:20:36.144Z][INFO]-Trying to subscribe to topic $aws/things/farms_Core-gcf/shadow/get/accepted
+[2020-12-07T11:20:36.144Z][DEBUG]-Subscribe	{"topic": "$aws/things/farms_Core-gcf/shadow/get/accepted", "qos": 0}
+[2020-12-07T11:20:36.209Z][DEBUG]-Subscribed to topic.	{"topic": "$aws/things/farms_Core-gcf/shadow/get/accepted"}
+[2020-12-07T11:20:36.209Z][DEBUG]-Publish	{"topic": "$aws/things/farms_Core-gcf/shadow/get", "qos": 1}
+[2020-12-07T11:20:36.239Z][INFO]-Trying to subscribe to topic $aws/things/farms_Core-gcf/shadow/update/delta
+[2020-12-07T11:20:36.239Z][DEBUG]-Subscribe	{"topic": "$aws/things/farms_Core-gcf/shadow/update/delta", "qos": 0}
+[2020-12-07T11:20:36.24Z][INFO]-Updating with update request.	{"aggregationIntervalSeconds": 3600, "publishIntervalSeconds": 86400}
+[2020-12-07T11:20:36.241Z][INFO]-Config update is in pending state.	{"aggregationIntervalSeconds": 3600, "publishIntervalSeconds": 86400}
+[2020-12-07T11:20:36.241Z][INFO]-Start metrics config updating.	{"aggregationIntervalSeconds": 3600, "publishIntervalSeconds": 86400}
+[2020-12-07T11:20:36.241Z][INFO]-Metric config update succeeded.
+[2020-12-07T11:20:36.241Z][DEBUG]-Report config update to the topic	{"topic": "$aws/things/farms_Core-gcf/shadow/update", "data": "{\"state\":{\"reported\":{\"telemetryConfiguration\":{\"publishIntervalSeconds\":86400,\"aggregationIntervalSeconds\":3600}}}}"}
+[2020-12-07T11:20:36.241Z][DEBUG]-Publish	{"topic": "$aws/things/farms_Core-gcf/shadow/update", "qos": 1}
+[2020-12-07T11:20:36.241Z][INFO]-Received signal to terminate aggregation schedule
+[2020-12-07T11:20:36.241Z][INFO]-Received signal to terminate upload schedule
+[2020-12-07T11:20:36.268Z][INFO]-Update metric config reported to the cloud.
+[2020-12-07T11:20:36.288Z][DEBUG]-Subscribed to topic.	{"topic": "$aws/things/farms_Core-gcf/shadow/update/delta"}
+[2020-12-07T11:20:36.288Z][INFO]-All topics subscribed.	{"clientId": "farms_Core"}
+[2020-12-07T11:51:54.188Z][INFO]-Start to process new deployment messages from the cloud.
+[2020-12-07T11:51:54.196Z][INFO]-Updating with deployment request.	{"groupId": "ddbc0da7-df43-4943-917d-d25dbff0f6f4", "deploymentId": "e5658161-caf7-4157-b964-099f433d6c60", "deploymentType": "NewDeployment"}
+[2020-12-07T11:51:54.196Z][INFO]-Deployment is in pending state.	{"deploymentId": "e5658161-caf7-4157-b964-099f433d6c60"}
+[2020-12-07T11:51:54.216Z][INFO]-Existing group config does not contain a group arn. Skipping check to perform reset due to update in group id.
+[2020-12-07T11:51:54.217Z][INFO]-End processing deployment messages from the cloud.
+[2020-12-07T11:51:54.217Z][INFO]-Start deployment.	{"groupId": "ddbc0da7-df43-4943-917d-d25dbff0f6f4", "deploymentId": "e5658161-caf7-4157-b964-099f433d6c60", "deploymentType": "NewDeployment"}
+[2020-12-07T11:51:54.53Z][INFO]-Executing the group Downloading step.
+[2020-12-07T11:51:55.133Z][INFO]-Downloaded the new group definition.	{"groupId": "ddbc0da7-df43-4943-917d-d25dbff0f6f4", "deploymentId": "e5658161-caf7-4157-b964-099f433d6c60"}
+[2020-12-07T11:51:55.153Z][INFO]-Saving lambda.	{"lambda": "arn:aws:lambda:::function:GGStreamManager:1", "path": "/greengrass/ggc/deployment/lambda/arn.aws.lambda...function.GGStreamManager.1"}
+[2020-12-07T11:51:55.153Z][INFO]-Saving lambda.	{"lambda": "arn:aws:lambda:::function:GGIPDetector:1", "path": "/greengrass/ggc/deployment/lambda/arn.aws.lambda...function.GGIPDetector.1"}
+[2020-12-07T11:51:55.242Z][INFO]-Finished executing the group downloading step.
+[2020-12-07T11:51:55.242Z][INFO]-Stopping All running workers.
+[2020-12-07T11:51:55.242Z][INFO]-Stopping all workers.
+[2020-12-07T11:51:55.242Z][INFO]-Lifecycle manager is stopped.
+[2020-12-07T11:51:55.259Z][INFO]-The current core is using the AWS IoT certificates with fingerprint.	{"fingerprint": "2c60b5d3dc0ae6d7155f0e4c24e7b17b45fbedc7965277344308cc492a18e511"}
+[2020-12-07T11:51:55.272Z][INFO]-Created worker.	{"functionArn": "arn:aws:lambda:::function:GGShadowService", "workerId": "ef6de853-304a-43af-6e7d-638967dd69fc", "pid": 3787}
+[2020-12-07T11:51:55.28Z][INFO]-Created worker.	{"functionArn": "arn:aws:lambda:::function:GGStreamManager:1", "workerId": "74992f08-1b15-49a3-545e-218494332b08", "pid": 3790}
+[2020-12-07T11:51:55.291Z][INFO]-Created worker.	{"functionArn": "arn:aws:lambda:::function:GGCloudSpooler:1", "workerId": "f8b67d81-d3b7-48f9-44dd-a6ab11ca15ca", "pid": 3797}
+[2020-12-07T11:51:55.301Z][INFO]-Created worker.	{"functionArn": "arn:aws:lambda:::function:GGTES", "workerId": "72c8854c-c079-4233-5f56-d0a46d2cb2d7", "pid": 3808}
+[2020-12-07T11:51:55.316Z][INFO]-Created worker.	{"functionArn": "arn:aws:lambda:::function:GGIPDetector:1", "workerId": "db286411-32e1-4313-789e-be7a4fc37bd3", "pid": 3817}
+[2020-12-07T11:51:55.335Z][INFO]-Created worker.	{"functionArn": "arn:aws:lambda:::function:GGDeviceCertificateManager", "workerId": "de3ab718-62e2-425e-5009-ae69e0ea4426", "pid": 3833}
+[2020-12-07T11:51:55.367Z][INFO]-Created worker.	{"functionArn": "arn:aws:lambda:::function:GGConnManager", "workerId": "367e91b6-6690-4ceb-694f-d02ee7bee0b0", "pid": 3867}
+[2020-12-07T11:51:55.411Z][INFO]-Created worker.	{"functionArn": "arn:aws:lambda:::function:GGSecretManager:1", "workerId": "9c62474e-8104-497c-7adf-81214de70c22", "pid": 3900}
+[2020-12-07T11:51:55.442Z][INFO]-Created worker.	{"functionArn": "arn:aws:lambda:::function:GGShadowSyncManager", "workerId": "68d4652d-0a45-47a0-4232-19ae5b2ed562", "pid": 3913}
+[2020-12-07T11:51:58.112Z][INFO]-Handled functions request.	{"functionName": "arn:aws:lambda:::function:GGStreamManager:1", "invocationId": ""}
+[2020-12-07T11:51:58.112Z][INFO]-Started all system components.
+[2020-12-07T11:51:58.118Z][INFO]-Deployment succeeded.	{"deploymentId": "e5658161-caf7-4157-b964-099f433d6c60"}
+[2020-12-07T11:51:58.177Z][INFO]-Updating deployment shadow.	{"deploymentId": "e5658161-caf7-4157-b964-099f433d6c60", "groupId": "ddbc0da7-df43-4943-917d-d25dbff0f6f4"}
+[2020-12-07T11:51:58.203Z][INFO]-Successfully updated deployment shadow.	{"deploymentId": "e5658161-caf7-4157-b964-099f433d6c60", "groupId": "ddbc0da7-df43-4943-917d-d25dbff0f6f4"}
+[2020-12-07T11:51:58.203Z][INFO]-Daemon restarting itself after deployment.
+[2020-12-07T11:51:58.203Z][INFO]-Stopping all workers.
+[2020-12-07T11:51:58.205Z][WARN]-Connection was closed by client.	{"errorString": "EOF"}
+[2020-12-07T11:51:58.205Z][WARN]-Connection was closed by client.	{"errorString": "EOF"}
+[2020-12-07T11:51:58.205Z][WARN]-Connection was closed by client.	{"errorString": "EOF"}
+[2020-12-07T11:51:58.205Z][WARN]-Connection was closed by client.	{"errorString": "EOF"}
+[2020-12-07T11:51:58.205Z][WARN]-Connection was closed by client.	{"errorString": "EOF"}
+[2020-12-07T11:51:58.205Z][WARN]-Connection was closed by client.	{"errorString": "EOF"}
+[2020-12-07T11:51:58.205Z][WARN]-Connection was closed by client.	{"errorString": "EOF"}
+[2020-12-07T11:51:58.205Z][WARN]-Connection was closed by client.	{"errorString": "EOF"}
+[2020-12-07T11:51:58.21Z][INFO]-Start to process new deployment messages from the cloud.
+[2020-12-07T11:51:58.21Z][INFO]-End processing deployment messages from the cloud.
+[2020-12-07T11:51:58.273Z][INFO]-Worker Max Memory Usage (KB).	{"workerId": "72c8854c-c079-4233-5f56-d0a46d2cb2d7", "funcArn": "arn:aws:lambda:::function:GGTES", "memUsed": 23292}
+[2020-12-07T11:51:58.473Z][INFO]-Worker Max Memory Usage (KB).	{"workerId": "f8b67d81-d3b7-48f9-44dd-a6ab11ca15ca", "funcArn": "arn:aws:lambda:::function:GGCloudSpooler:1", "memUsed": 23292}
+[2020-12-07T11:51:58.674Z][INFO]-Worker Memory Usage (KB).	{"workerId": "db286411-32e1-4313-789e-be7a4fc37bd3", "funcArn": "arn:aws:lambda:::function:GGIPDetector:1", "memSize": 32768, "memUsed": 23292}
+[2020-12-07T11:51:58.874Z][INFO]-Worker Max Memory Usage (KB).	{"workerId": "9c62474e-8104-497c-7adf-81214de70c22", "funcArn": "arn:aws:lambda:::function:GGSecretManager:1", "memUsed": 23292}
+[2020-12-07T11:51:59.074Z][INFO]-Worker Max Memory Usage (KB).	{"workerId": "de3ab718-62e2-425e-5009-ae69e0ea4426", "funcArn": "arn:aws:lambda:::function:GGDeviceCertificateManager", "memUsed": 23292}
+[2020-12-07T11:51:59.274Z][INFO]-Worker Max Memory Usage (KB).	{"workerId": "ef6de853-304a-43af-6e7d-638967dd69fc", "funcArn": "arn:aws:lambda:::function:GGShadowService", "memUsed": 23292}
+[2020-12-07T11:52:00.274Z][INFO]-Worker Max Memory Usage (KB).	{"workerId": "74992f08-1b15-49a3-545e-218494332b08", "funcArn": "arn:aws:lambda:::function:GGStreamManager:1", "memUsed": 199860}
+[2020-12-07T11:52:08.622Z][INFO]-===========================================
+[2020-12-07T11:52:08.622Z][INFO]-Greengrass Version: 1.11.0-RC2
+[2020-12-07T11:52:08.622Z][INFO]-Greengrass Root: /greengrass
+[2020-12-07T11:52:08.622Z][INFO]-Greengrass Write Directory: /greengrass/ggc
+[2020-12-07T11:52:08.622Z][INFO]-Group File Directory: /greengrass/ggc/deployment/group
+[2020-12-07T11:52:08.622Z][INFO]-Default Lambda UID: 122
+[2020-12-07T11:52:08.622Z][INFO]-Default Lambda GID: 121
+[2020-12-07T11:52:08.623Z][INFO]-===========================================
+[2020-12-07T11:52:08.628Z][INFO]-The current core is using the AWS IoT certificates with fingerprint.	{"fingerprint": "2c60b5d3dc0ae6d7155f0e4c24e7b17b45fbedc7965277344308cc492a18e511"}
+[2020-12-07T11:52:08.629Z][INFO]-Will persist worker process info.	{"dir": "/greengrass/ggc/packages/1.11.0/var/worker/processes"}
+[2020-12-07T11:52:08.629Z][INFO]-Will persist worker process info.	{"dir": "/greengrass/ggc/packages/1.11.0/var/worker/processes"}
+[2020-12-07T11:52:08.629Z][INFO]-No proxy URL found.
+[2020-12-07T11:52:08.645Z][INFO]-No proxy URL found.
+[2020-12-07T11:52:08.646Z][INFO]-The current core is using the AWS IoT certificates with fingerprint.	{"fingerprint": "2c60b5d3dc0ae6d7155f0e4c24e7b17b45fbedc7965277344308cc492a18e511"}
+[2020-12-07T11:52:08.646Z][INFO]-Connecting with MQTT.	{"endpoint": "arig5vtggzkh-ats.iot.eu-central-1.amazonaws.com:8883", "clientId": "farms_Core"}
+[2020-12-07T11:52:08.672Z][INFO]-Created worker.	{"functionArn": "arn:aws:lambda:::function:GGIPDetector:1", "workerId": "bf8f0ae9-daaa-4d65-762e-12a1660849a2", "pid": 4080}
+[2020-12-07T11:52:08.689Z][INFO]-Created worker.	{"functionArn": "arn:aws:lambda:::function:GGCloudSpooler:1", "workerId": "5e5f3d47-970c-448b-4939-8b40bf8ad235", "pid": 4089}
+[2020-12-07T11:52:08.707Z][INFO]-Created worker.	{"functionArn": "arn:aws:lambda:::function:GGShadowService", "workerId": "83df37bf-0856-4514-7519-caaf1edfea88", "pid": 4107}
+[2020-12-07T11:52:08.725Z][INFO]-Created worker.	{"functionArn": "arn:aws:lambda:::function:GGDeviceCertificateManager", "workerId": "0c0a74d0-762d-4552-4249-d96157e71aa0", "pid": 4127}
+[2020-12-07T11:52:08.743Z][INFO]-Created worker.	{"functionArn": "arn:aws:lambda:::function:GGStreamManager:1", "workerId": "2ba2e16c-97dd-4352-41b5-8af703f200c3", "pid": 4148}
+[2020-12-07T11:52:08.76Z][INFO]-Created worker.	{"functionArn": "arn:aws:lambda:::function:GGSecretManager:1", "workerId": "8d525ac9-d3e2-4f96-43de-4fef83565484", "pid": 4164}
+[2020-12-07T11:52:08.776Z][INFO]-Created worker.	{"functionArn": "arn:aws:lambda:::function:GGTES", "workerId": "be06663b-54ab-4c83-7852-8a4a98f189dc", "pid": 4183}
+[2020-12-07T11:52:08.792Z][INFO]-Created worker.	{"functionArn": "arn:aws:lambda:::function:GGShadowSyncManager", "workerId": "349c46f9-6177-44f5-6fdd-1b9e2cec8d6a", "pid": 4203}
+[2020-12-07T11:52:08.803Z][INFO]-Created worker.	{"functionArn": "arn:aws:lambda:::function:GGConnManager", "workerId": "1cfe5743-79b7-4b83-4d8e-c53500320bd7", "pid": 4228}
+[2020-12-07T11:52:10.728Z][INFO]-Handled functions request.	{"functionName": "arn:aws:lambda:::function:GGStreamManager:1", "invocationId": ""}
+[2020-12-07T11:52:10.728Z][INFO]-Started all system components.
+[2020-12-07T11:52:20.813Z][INFO]-MQTT connection successful.	{"attemptId": "qmPy", "clientId": "farms_Core"}
+[2020-12-07T11:52:20.813Z][INFO]-MQTT connection established.	{"endpoint": "arig5vtggzkh-ats.iot.eu-central-1.amazonaws.com:8883", "clientId": "farms_Core"}
+[2020-12-07T11:52:20.813Z][INFO]-MQTT connection connected. Start subscribing.	{"clientId": "farms_Core", "count": 1}
+[2020-12-07T11:52:20.813Z][INFO]-Daemon connected to cloud.
+[2020-12-07T11:52:20.813Z][INFO]-Start subscribing.	{"numOfTopics": 5, "clientId": "farms_Core"}
+[2020-12-07T11:52:20.813Z][INFO]-Trying to subscribe to topic $aws/things/farms_Core-gda/shadow/get/accepted
+[2020-12-07T11:52:20.875Z][INFO]-Trying to subscribe to topic $aws/things/farms_Core-gda/shadow/update/delta
+[2020-12-07T11:52:20.926Z][INFO]-Trying to subscribe to topic $aws/things/farms_Core-gcf/shadow/get/rejected
