@@ -71,4 +71,3 @@ func StartBlink(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, "Light Triggered")
 }
 
-// TODO Function for CatTree Information Handler @Emil, @Behnaz
