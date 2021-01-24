@@ -213,7 +213,6 @@ func (store *Database) InsertPumpTimes(pumpData *PumpData) (status *Status, err 
 func (store *Database) RealityCheck(realitycheckData *RealityCheckData)  (status *Status, err error) {
 	status = &Status{}
 
-
 	//Insert RealityChecked Data into tables
 	for i, v := range realitycheckData.Age {
 		if (v == 0){

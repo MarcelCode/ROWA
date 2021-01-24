@@ -31,27 +31,8 @@ type PlantInfoPerModule struct {
 	Harvestable   bool   `json:"harvestable"`
 }
 
-
-func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*PlantsPerPlantType, err error) {
-	switch farmAction {
-	case "harvestable":
-		getHarvestablePlants()
-	case "plantable":
-		getPlantablePlants()
-	case "modules":
-		getAllPlantsInModules()
-	default:
-
-		
-	}
-
-
-	
-	return
-}
 func (store *Database) getHarvestablePlants() (plantsToHarvest []*PlantsPerPlantType, err error){
-	sqlQuery := ``
-	sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlantsPerPlantType
+	sqlQuery := `SELECT PlantType, COUNT(PlantType) as AvailablePlantsPerPlantType
 				FROM Plant
 						 INNER JOIN Module M on Plant.Module = M.Id
 						 INNER JOIN PlantType PT on M.PlantType = PT.Name
@@ -75,21 +56,41 @@ func (store *Database) getHarvestablePlants() (plantsToHarvest []*PlantsPerPlant
 	return
 }
 
+func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*PlantsPerPlantType, err error) {
+	switch farmAction {
+	case "harvestable":
+		getHarvestablePlants()
+	case "plantable":
+		getPlantablePlants()
+	case "modules":
+		getAllPlantsInModules()
+	default:
 
-func (store *Database) getPlantablePlants() (plantsToHarvest []*PlantsPerPlantType, err error){
-	sqlQuery := ``
+		
+	}
+	return
+}
 
-	for i := 1; i < 7; i++ {
-		sqlQuery = `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
+func (store *Database) getAmountOfPlantsPerModule(i int)(id int){
+	sqlQuery := `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
 		rows, err := store.Db.Query(sqlQuery, i)
 		rows.Next()
-		var id int
+		
 		rows.Scan(&id)
 		
 		if err != nil {
 			log.Fatal(err)
 		}
 		rows.Close()
+		return id
+}
+
+func (store *Database) getPlantablePlants() (plantsToHarvest []*PlantsPerPlantType, err error){
+	sqlQuery := ``
+
+	for i := 1; i < 7; i++ {
+		id := getAmountOfPlantsPerModule(i)
+		
 		
 		sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlants
 					FROM Plant
@@ -99,7 +100,7 @@ func (store *Database) getPlantablePlants() (plantsToHarvest []*PlantsPerPlantTy
 					AND M.Id = ?
 					AND date(PlantDate, '+' || 7 || ' days') <= date('now')`
 		
-		rows, err = store.Db.Query(sqlQuery, i)
+		rows, err := store.Db.Query(sqlQuery, i)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -225,7 +226,6 @@ func (store *Database) GetLastSensorEntry() (sensorData *SensorData, err error) 
 		log.Fatal(err)
 	}
 	defer row.Close()
-
 	sensorData = &SensorData{}
 
 	row.Next()
