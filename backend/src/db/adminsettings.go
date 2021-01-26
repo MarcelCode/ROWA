@@ -29,16 +29,14 @@ type PlantTypes struct {
 	TypeModule int    `json:"typemodule"`
 }
 
-
-
-type RealityCheckData struct  {
-	ModuleNumber int `json:"modulenum"`
-	Age []int `json:"age"`
-	Type string `json:"type"`
+type RealityCheckData struct {
+	ModuleNumber int    `json:"modulenum"`
+	Age          []int  `json:"age"`
+	Type         string `json:"type"`
 }
 
 type RealityCheckDataPos struct {
-	Age int `json:"age"`
+	Age         int  `json:"age"`
 	Harvestable bool `json:"harvestable"`
 }
 
@@ -127,7 +125,7 @@ func (store *Database) InsertModuleChanges(plantTypes *PlantTypes) (status *Stat
 	statement, _ := store.Db.Prepare(sqlQuery)
 	defer statement.Close()
 	_, err = statement.Exec(plantTypes.TypeName, plantTypes.TypeModule)
-	
+
 	if err != nil {
 		status.Message = "error"
 		return
@@ -136,8 +134,8 @@ func (store *Database) InsertModuleChanges(plantTypes *PlantTypes) (status *Stat
 	sqlQuery = `UPDATE Plant SET Harvested = 1, PlantPosition = 0 WHERE PlantPosition = ? AND Module= ?`
 	statement, _ = store.Db.Prepare(sqlQuery)
 	for i := 0; i < 6; i++ {
-	_, err = statement.Exec(i+1, plantTypes.TypeModule)
-	
+		_, err = statement.Exec(i+1, plantTypes.TypeModule)
+
 	}
 	status.Message = "Module Changed"
 	return
@@ -210,13 +208,12 @@ func (store *Database) InsertPumpTimes(pumpData *PumpData) (status *Status, err 
 	return
 }
 
-func (store *Database) RealityCheck(realitycheckData *RealityCheckData)  (status *Status, err error) {
+func (store *Database) RealityCheck(realitycheckData *RealityCheckData) (status *Status, err error) {
 	status = &Status{}
-
 
 	//Insert RealityChecked Data into tables
 	for i, v := range realitycheckData.Age {
-		if (v == 0){
+		if v == 0 {
 			sqlQuery := `UPDATE Plant SET Harvested = 1, PlantPosition = 0 WHERE PlantPosition = ? AND Module= ?`
 			statement, _ := store.Db.Prepare(sqlQuery)
 			defer statement.Close()
@@ -234,8 +231,8 @@ func (store *Database) RealityCheck(realitycheckData *RealityCheckData)  (status
 				status.Message = "error"
 				return
 			}
-			
-		} else if (v == 1){
+
+		} else if v == 1 {
 			sqlQuery := `DELETE FROM Plant WHERE PlantPosition = ? AND Module= ? AND Harvested = 0`
 			statement, _ := store.Db.Prepare(sqlQuery)
 			defer statement.Close()
@@ -245,22 +242,20 @@ func (store *Database) RealityCheck(realitycheckData *RealityCheckData)  (status
 			statement, _ = store.Db.Prepare(sqlQuery)
 			defer statement.Close()
 			_, err = statement.Exec(realitycheckData.ModuleNumber, i+1, time.Now().Format("2006-01-02"), 0)
-           
-		} else{
+
+		} else {
 			sqlQuery := `DELETE FROM Plant WHERE PlantPosition = ? AND Module= ? AND Harvested = 0`
 			statement, _ := store.Db.Prepare(sqlQuery)
 			defer statement.Close()
-			_, err = statement.Exec( i+1, realitycheckData.ModuleNumber)
+			_, err = statement.Exec(i+1, realitycheckData.ModuleNumber)
 
 			sqlQuery = `INSERT OR IGNORE INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)`
 			statement, _ = store.Db.Prepare(sqlQuery)
 			defer statement.Close()
-			_, err = statement.Exec(realitycheckData.ModuleNumber, i+1, time.Now().AddDate(0,0,-v).Format("2006-01-02"), 0)
-		
-					
+			_, err = statement.Exec(realitycheckData.ModuleNumber, i+1, time.Now().AddDate(0, 0, -v).Format("2006-01-02"), 0)
+
 		}
 	}
-
 
 	//Update Available Plant Count
 	sqlQuery := `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
@@ -280,6 +275,24 @@ func (store *Database) RealityCheck(realitycheckData *RealityCheckData)  (status
 	}
 
 	status.Message = "RealityCheck Data inserted"
-	return 
+	return
 
-} 
+}
+
+func (store *Database) InsertLightState(currentState int) (status *Status, err error) {
+	status = &Status{}
+	sqlQuery := `UPDATE TimeTable SET CurrentState= ? WHERE ID = 1`
+
+	statement, _ := store.Db.Prepare(sqlQuery)
+	defer statement.Close()
+
+	_, err = store.Db.Exec(sqlQuery, currentState)
+	if err != nil {
+		status.Message = "error"
+		return
+	}
+
+	status.Message = "Light state inserted"
+	return
+
+}

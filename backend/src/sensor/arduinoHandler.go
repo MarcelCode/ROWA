@@ -9,7 +9,7 @@ import (
 
 var ch = make(chan string, 100)
 
-func WriteToCh(input string) {
+func WriteToChannel(input string) {
 	ch <- input
 }
 

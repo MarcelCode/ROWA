@@ -9,7 +9,6 @@ import (
 	"strings"
 	"time"
 
-	//"github.com/jacobsa/go-serial/serial"
 	"github.com/tarm/serial"
 )
 
@@ -28,7 +27,6 @@ func SetupSerialConnection() (s *serial.Port, err error) {
 	}
 
 	return s, err
-
 }
 
 func ActivateModuleLight(moduleNumber int) {
@@ -36,15 +34,14 @@ func ActivateModuleLight(moduleNumber int) {
 	moduleString := strconv.Itoa(moduleNumber)
 
 	// Give Connection time to send Data
-	WriteToCh(moduleString)
+	WriteToChannel(moduleString)
 }
 func TriggerPump(state bool) {
-
 	if state {
-		WriteToCh("90")
+		WriteToChannel("90")
 		fmt.Println("Pump on")
 	} else {
-		WriteToCh("91")
+		WriteToChannel("91")
 		fmt.Println("Pump off")
 	}
 
@@ -52,24 +49,31 @@ func TriggerPump(state bool) {
 
 func TriggerAirStone(state bool) {
 	if state {
-		WriteToCh("70")
+		WriteToChannel("70")
 		fmt.Println("Airstone on")
 	} else {
-		WriteToCh("71")
+		WriteToChannel("71")
 		fmt.Println("Airstone off")
 	}
 }
 
 func DeactivateModuleLight() {
-	WriteToCh("99")
+	WriteToChannel("99")
 }
+func WriteLightState(currentState int) {
+	database, _ := sql.Open("sqlite3", "./rowa.db")
+	statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 1 WHERE ID = 1")
+	statement.Exec()
+	database.Close()
 
+}
 func LightSwitch(state bool) {
 	fmt.Println("Light switch triggered")
 
 	//send turn off or on to arduino
+
 	if state {
-		WriteToCh("80")
+		WriteToChannel("80")
 		fmt.Println("Light on")
 		//change DB light State
 		database, _ := sql.Open("sqlite3", "./rowa.db")
@@ -77,7 +81,7 @@ func LightSwitch(state bool) {
 		statement.Exec()
 		database.Close()
 	} else {
-		WriteToCh("81")
+		WriteToChannel("81")
 		fmt.Println("Light off")
 		//change DB light State
 		database, _ := sql.Open("sqlite3", "./rowa.db")
@@ -87,6 +91,7 @@ func LightSwitch(state bool) {
 	}
 
 }
+
 func ReadFakeSensorData() {
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")

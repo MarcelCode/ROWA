@@ -11,6 +11,7 @@ type Store interface {
 	FinishPlanting(*PlantedModule) (*Status, error)
 	GetLightTimes() (*CurrentTime, error)
 	InsertLightTimes(*Times) (*Status, error)
+	InsertLightState(currentState int) (*Status, error)
 	RealityCheck(*RealityCheckData) (*Status, error)
 
 	InsertModuleChanges(*PlantTypes) (*Status, error)
