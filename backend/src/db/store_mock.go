@@ -12,7 +12,22 @@ func (m *MockStore) GetPlantsPerType(p string) ([]*PlantsPerPlantType, error) {
 	rets := m.Called(p)
 	return rets.Get(0).([]*PlantsPerPlantType), rets.Error(1)
 }
-
+func (m *MockStore) GetHarvestablePlants() ([]*PlantsPerPlantType, error) {
+	rets := m.Called()
+	return rets.Get(0).([]*PlantsPerPlantType), rets.Error(1)
+}
+func (m *MockStore) GetPlantablePlants() ([]*PlantsPerPlantType, error) {
+	rets := m.Called()
+	return rets.Get(0).([]*PlantsPerPlantType), rets.Error(1)
+}
+func (m *MockStore) GetAllPlantsInModules() ([]*PlantsPerPlantType, error) {
+	rets := m.Called()
+	return rets.Get(0).([]*PlantsPerPlantType), rets.Error(1)
+}
+func (m *MockStore) GetAmountOfPlantsPerModule(int)(int) {
+	rets := m.Called()
+	return rets.Get(0).(int)
+}
 func (m *MockStore) GetHarvestablePlant(plantType *PlantType) (*PositionOnFarm, error) {
 	rets := m.Called(plantType)
 	return rets.Get(0).(*PositionOnFarm), rets.Error(1)

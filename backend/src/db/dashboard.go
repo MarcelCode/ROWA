@@ -31,7 +31,7 @@ type PlantInfoPerModule struct {
 	Harvestable   bool   `json:"harvestable"`
 }
 
-func (store *Database) getHarvestablePlants() (plantsToHarvest []*PlantsPerPlantType, err error){
+func (store *Database) GetHarvestablePlants() (plantsToHarvest []*PlantsPerPlantType, err error){
 	sqlQuery := `SELECT PlantType, COUNT(PlantType) as AvailablePlantsPerPlantType
 				FROM Plant
 						 INNER JOIN Module M on Plant.Module = M.Id
@@ -56,10 +56,10 @@ func (store *Database) getHarvestablePlants() (plantsToHarvest []*PlantsPerPlant
 	return
 }
 
-func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*PlantsPerPlantType, err error) {
+/*func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*PlantsPerPlantType, err error) {
 	switch farmAction {
 	case "harvestable":
-		getHarvestablePlants()
+		plantsToHarvest,_:= getHarvestablePlants(farmAction)
 	case "plantable":
 		getPlantablePlants()
 	case "modules":
@@ -69,9 +69,9 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 		
 	}
 	return
-}
+}*/
 
-func (store *Database) getAmountOfPlantsPerModule(i int)(id int){
+func (store *Database) GetAmountOfPlantsPerModule(i int)(id int){
 	sqlQuery := `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
 		rows, err := store.Db.Query(sqlQuery, i)
 		rows.Next()
@@ -85,12 +85,12 @@ func (store *Database) getAmountOfPlantsPerModule(i int)(id int){
 		return id
 }
 
-func (store *Database) getPlantablePlants() (plantsToHarvest []*PlantsPerPlantType, err error){
+func (store *Database) GetPlantablePlants() (plantsToHarvest []*PlantsPerPlantType, err error){
+	
 	sqlQuery := ``
 
 	for i := 1; i < 7; i++ {
-		id := getAmountOfPlantsPerModule(i)
-		
+		id := store.GetAmountOfPlantsPerModule(i)
 		
 		sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlants
 					FROM Plant
@@ -153,7 +153,7 @@ func (store *Database) getPlantablePlants() (plantsToHarvest []*PlantsPerPlantTy
 return
 }
 
-func (store *Database) getAllPlantsInModules() (plantsToHarvest []*PlantsPerPlantType, err error) {
+func (store *Database) GetAllPlantsInModules() (plantsToHarvest []*PlantsPerPlantType, err error) {
 	sqlQuery := ``
 	for i := 1; i < 7; i++ {
 		sqlQuery = `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
