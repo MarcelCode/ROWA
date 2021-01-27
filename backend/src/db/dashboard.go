@@ -10,9 +10,9 @@ type SensorData struct {
 	Temp           float64 `json:"temperature"`
 	LightIntensity float64 `json:"light_intensity"`
 	Humidity       float64 `json:"humidity"`
-	WaterLevel     float64 `json:"water_level"`   
+	WaterLevel     float64 `json:"water_level"`
 	WaterTemp      float64 `json:"water_temp"`
-    WaterpH        float64 `json:"water_ph"`
+	WaterpH        float64 `json:"water_ph"`
 }
 
 type PlantsPerPlantType struct {
@@ -21,7 +21,7 @@ type PlantsPerPlantType struct {
 }
 
 type BlinkModule struct {
-	Module int    `json:"module"`
+	Module int `json:"module"`
 }
 
 type PlantInfoPerModule struct {
@@ -31,7 +31,7 @@ type PlantInfoPerModule struct {
 	Harvestable   bool   `json:"harvestable"`
 }
 
-func (store *Database) GetHarvestablePlants() (plantsToHarvest []*PlantsPerPlantType, err error){
+func (store *Database) GetHarvestablePlants() (plantsToHarvest []*PlantsPerPlantType, err error) {
 	sqlQuery := `SELECT PlantType, COUNT(PlantType) as AvailablePlantsPerPlantType
 				FROM Plant
 						 INNER JOIN Module M on Plant.Module = M.Id
@@ -39,7 +39,7 @@ func (store *Database) GetHarvestablePlants() (plantsToHarvest []*PlantsPerPlant
 				where Harvested = 0
 				  and date(PlantDate, '+' || GrowthTime || ' days') <= date('now')
 				GROUP BY PlantType`
-				rows, err := store.Db.Query(sqlQuery)
+	rows, err := store.Db.Query(sqlQuery)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -56,42 +56,60 @@ func (store *Database) GetHarvestablePlants() (plantsToHarvest []*PlantsPerPlant
 	return
 }
 
-/*func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*PlantsPerPlantType, err error) {
-	switch farmAction {
-	case "harvestable":
-		plantsToHarvest,_:= getHarvestablePlants(farmAction)
-	case "plantable":
-		getPlantablePlants()
-	case "modules":
-		getAllPlantsInModules()
-	default:
-
-		
-	}
-	return
-}*/
-
-func (store *Database) GetAmountOfPlantsPerModule(i int)(id int){
-	sqlQuery := `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
-		rows, err := store.Db.Query(sqlQuery, i)
-		rows.Next()
-		
-		rows.Scan(&id)
-		
+func (store *Database) CountPlantablePlants(rows Row) {
+	for rows.Next() {
+		plantsPerPlantType := &PlantsPerPlantType{}
+		err = rows.Scan(&plantsPerPlantType.Name, &plantsPerPlantType.AvailablePlants)
 		if err != nil {
-			log.Fatal(err)
+			sqlQuery = `SELECT PlantType
+					FROM Module 
+					WHERE Id = ?`
+			rows, err = store.Db.Query(sqlQuery, i)
+			var plantType string
+			rows.Next()
+			rows.Scan(&plantType)
+			if err != nil {
+				log.Print(err)
+			}
+			plantsPerPlantType := &PlantsPerPlantType{}
+			plantsPerPlantType.Name = plantType
+			plantsPerPlantType.AvailablePlants = 6
+			if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
+				p, found := find(plantsToHarvest, plantsPerPlantType.Name)
+				if found {
+					plantsToHarvest[p].AvailablePlants++
+					log.Print(plantsPerPlantType)
+				} else {
+					plantsPerPlantType.AvailablePlants = 1
+					plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
+					log.Print(plantsPerPlantType)
+				}
+			}
+			break
 		}
-		rows.Close()
-		return id
+		if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
+			p, found := find(plantsToHarvest, plantsPerPlantType.Name)
+			if found {
+				plantsToHarvest[p].AvailablePlants++
+				log.Print(plantsPerPlantType)
+			} else {
+				plantsPerPlantType.AvailablePlants = 1
+				plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
+				log.Print(plantsPerPlantType)
+			}
+
+		}
+
+	}
 }
 
-func (store *Database) GetPlantablePlants() (plantsToHarvest []*PlantsPerPlantType, err error){
-	
+func (store *Database) GetPlantablePlants() (plantsToHarvest []*PlantsPerPlantType, err error) {
+
 	sqlQuery := ``
 
 	for i := 1; i < 7; i++ {
 		id := store.GetAmountOfPlantsPerModule(i)
-		
+
 		sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlants
 					FROM Plant
 							INNER JOIN Module M on Plant.Module = M.Id
@@ -99,58 +117,58 @@ func (store *Database) GetPlantablePlants() (plantsToHarvest []*PlantsPerPlantTy
 					WHERE Harvested = 0
 					AND M.Id = ?
 					AND date(PlantDate, '+' || 7 || ' days') <= date('now')`
-		
+
 		rows, err := store.Db.Query(sqlQuery, i)
 		if err != nil {
 			log.Fatal(err)
 		}
 		defer rows.Close()
-		
-		for rows.Next() {
-				plantsPerPlantType := &PlantsPerPlantType{}
-				err = rows.Scan(&plantsPerPlantType.Name, &plantsPerPlantType.AvailablePlants)
-				if err != nil {
-					sqlQuery = `SELECT PlantType
-							FROM Module 
-							WHERE Id = ?`
-							rows, err = store.Db.Query(sqlQuery, i)
-							var plantType string
-							rows.Next()
-							rows.Scan(&plantType)
-							if (err != nil) {log.Print(err)}
-							plantsPerPlantType := &PlantsPerPlantType{}
-							plantsPerPlantType.Name = plantType
-							plantsPerPlantType.AvailablePlants = 6
-							if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
-								p, found := find(plantsToHarvest, plantsPerPlantType.Name)
-								if found {
-									plantsToHarvest[p].AvailablePlants++
-									log.Print(plantsPerPlantType)
-								} else {
-									plantsPerPlantType.AvailablePlants = 1
-									plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
-									log.Print(plantsPerPlantType)
+		plantsToHarvest := CountPlantablePlants()
+		/*for rows.Next() {
+					plantsPerPlantType := &PlantsPerPlantType{}
+					err = rows.Scan(&plantsPerPlantType.Name, &plantsPerPlantType.AvailablePlants)
+					if err != nil {
+						sqlQuery = `SELECT PlantType
+								FROM Module
+								WHERE Id = ?`
+								rows, err = store.Db.Query(sqlQuery, i)
+								var plantType string
+								rows.Next()
+								rows.Scan(&plantType)
+								if (err != nil) {log.Print(err)}
+								plantsPerPlantType := &PlantsPerPlantType{}
+								plantsPerPlantType.Name = plantType
+								plantsPerPlantType.AvailablePlants = 6
+								if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
+									p, found := find(plantsToHarvest, plantsPerPlantType.Name)
+									if found {
+										plantsToHarvest[p].AvailablePlants++
+										log.Print(plantsPerPlantType)
+									} else {
+										plantsPerPlantType.AvailablePlants = 1
+										plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
+										log.Print(plantsPerPlantType)
+									}
 								}
-							}
-							break
-				}
-				if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
-					p, found := find(plantsToHarvest, plantsPerPlantType.Name)
-					if found {
-						plantsToHarvest[p].AvailablePlants++
-						log.Print(plantsPerPlantType)
-					} else {
-						plantsPerPlantType.AvailablePlants = 1
-						plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
-						log.Print(plantsPerPlantType)
+								break
 					}
-							
-			 }
-		
+					if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
+						p, found := find(plantsToHarvest, plantsPerPlantType.Name)
+						if found {
+							plantsToHarvest[p].AvailablePlants++
+							log.Print(plantsPerPlantType)
+						} else {
+							plantsPerPlantType.AvailablePlants = 1
+							plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
+							log.Print(plantsPerPlantType)
+						}
 
+				 }
+
+
+		}*/
 	}
-}
-return
+	return
 }
 
 func (store *Database) GetAllPlantsInModules() (plantsToHarvest []*PlantsPerPlantType, err error) {
@@ -161,12 +179,12 @@ func (store *Database) GetAllPlantsInModules() (plantsToHarvest []*PlantsPerPlan
 		rows.Next()
 		var id int
 		rows.Scan(&id)
-		
+
 		if err != nil {
 			log.Fatal(err)
 		}
 		rows.Close()
-		
+
 		sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlants
 					FROM Plant
 							INNER JOIN Module M on Plant.Module = M.Id
@@ -174,47 +192,61 @@ func (store *Database) GetAllPlantsInModules() (plantsToHarvest []*PlantsPerPlan
 					WHERE Harvested = 0
 					AND M.Id = ?
 					AND date(PlantDate, '+' || 7 || ' days') <= date('now')`
-		
+
 		rows, err = store.Db.Query(sqlQuery, i)
 		if err != nil {
 			log.Fatal(err)
 		}
-		
+
 		defer rows.Close()
-	
+
 		for rows.Next() {
-			
-			
+
 			plantsPerPlantType := &PlantsPerPlantType{}
 			err = rows.Scan(&plantsPerPlantType.Name, &plantsPerPlantType.AvailablePlants)
 			if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
-			plantsPerPlantType.AvailablePlants = i
-			if err != nil {
-				sqlQuery = `SELECT PlantType
-				FROM Module 
-				WHERE Id = ?`
-				rows, err = store.Db.Query(sqlQuery, i)
-				var plantType string
-				rows.Scan(&plantType)
-				plantsPerPlantType := &PlantsPerPlantType{}
-				plantsPerPlantType.Name = plantType
-				plantsPerPlantType.AvailablePlants = 6
-				if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
 				plantsPerPlantType.AvailablePlants = i
 				if err != nil {
-					log.Print(err)
+					sqlQuery = `SELECT PlantType
+				FROM Module 
+				WHERE Id = ?`
+					rows, err = store.Db.Query(sqlQuery, i)
+					var plantType string
+					rows.Scan(&plantType)
+					plantsPerPlantType := &PlantsPerPlantType{}
+					plantsPerPlantType.Name = plantType
+					plantsPerPlantType.AvailablePlants = 6
+					if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
+						plantsPerPlantType.AvailablePlants = i
+						if err != nil {
+							log.Print(err)
+						}
+						plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
+					}
+					break
 				}
-				plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)}
-				break
+				plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
 			}
-			plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)}
 			break
-		
-		} }
-		return
+
+		}
+	}
+	return
 
 }
+func (store *Database) GetAmountOfPlantsPerModule(i int) (id int) {
+	sqlQuery := `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
+	rows, err := store.Db.Query(sqlQuery, i)
+	rows.Next()
 
+	rows.Scan(&id)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	rows.Close()
+	return id
+}
 
 func (store *Database) GetLastSensorEntry() (sensorData *SensorData, err error) {
 	sqlQuery := `SELECT Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH
@@ -274,7 +306,7 @@ func (store *Database) GetCatTreeData(module int) (plantInfo []*PlantInfoPerModu
 		}
 		plantInfo = append(plantInfo, plantInfoPerModule)
 	}
-	
+
 	return plantInfo, err
 
 }
