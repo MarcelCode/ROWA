@@ -3,9 +3,14 @@ package db
 import "database/sql"
 
 type Store interface {
-	GetPlantsPerType(p string) ([]*PlantsPerPlantType, error)
 	GetLastSensorEntry() (*SensorData, error)
+	GetPlantablePlantsPerModule(rows *sql.Rows, i int) []*PlantsPerPlantType
 	GetHarvestablePlant(*PlantType) (*PositionOnFarm, error)
+	GetAllPlantablePlants() ([]*PlantsPerPlantType, error)
+	GetHarvestablePlants() ([]*PlantsPerPlantType, error)
+	GetAllPlantsInModules() ([]*PlantsPerPlantType, error)
+	GetPlantTypePerModule(int) string
+
 	HarvestDone(*PositionOnFarm) (*Status, error)
 	Plant(*PlantType) (int, error)
 	FinishPlanting(*PlantedModule) (*Status, error)
@@ -29,6 +34,8 @@ type Store interface {
 
 	GetAllHarvestablePlant() ([]*PositionOnFarm2, error)
 	MassHarvest([]PositionOnFarm) (*Status, error)
+
+	GetAmountOfPlantsPerModule(int) int
 }
 
 // The `dbStore` struct will implement the `Store` interface

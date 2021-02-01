@@ -11,7 +11,7 @@ import (
 )
 
 func GetHarvestablePlantsHandler(c echo.Context) (err error) {
-	plantsToHarvest, err := db.FunctionStore.GetPlantsPerType("harvestable")
+	plantsToHarvest, err := db.FunctionStore.GetHarvestablePlants()
 	if err != nil {
 		return c.JSON(http.StatusNotFound, "Harvestable Plants not found")
 	}
@@ -20,7 +20,7 @@ func GetHarvestablePlantsHandler(c echo.Context) (err error) {
 }
 
 func GetPlantablePlantsHandler(c echo.Context) (err error) {
-	plantsToHarvest, err := db.FunctionStore.GetPlantsPerType("plantable")
+	plantsToHarvest, err := db.FunctionStore.GetAllPlantablePlants()
 	if err != nil {
 		return c.JSON(http.StatusNotFound, "Plantable Plants not found")
 	}
@@ -29,7 +29,7 @@ func GetPlantablePlantsHandler(c echo.Context) (err error) {
 }
 
 func GetPlantableModulesHandler(c echo.Context) (err error) {
-	plantsToHarvest, err := db.FunctionStore.GetPlantsPerType("modules")
+	plantsToHarvest, err := db.FunctionStore.GetAllPlantsInModules()
 	if err != nil {
 		return c.JSON(http.StatusNotFound, "Plantable Plants not found")
 	}

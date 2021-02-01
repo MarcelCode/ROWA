@@ -1,6 +1,8 @@
 package db
 
 import (
+	"database/sql"
+
 	"github.com/stretchr/testify/mock"
 )
 
@@ -8,11 +10,31 @@ type MockStore struct {
 	mock.Mock
 }
 
-func (m *MockStore) GetPlantsPerType(p string) ([]*PlantsPerPlantType, error) {
-	rets := m.Called(p)
-	return rets.Get(0).([]*PlantsPerPlantType), rets.Error(1)
+func (m *MockStore) GetPlantablePlantsPerModule(rows *sql.Rows, i int) []*PlantsPerPlantType {
+	rets := m.Called()
+	return rets.Get(0).([]*PlantsPerPlantType)
+}
+func (m *MockStore) GetPlantTypePerModule(int) string {
+	rets := m.Called()
+	return rets.Get(0).(string)
 }
 
+func (m *MockStore) GetHarvestablePlants() ([]*PlantsPerPlantType, error) {
+	rets := m.Called()
+	return rets.Get(0).([]*PlantsPerPlantType), rets.Error(1)
+}
+func (m *MockStore) GetAllPlantablePlants() ([]*PlantsPerPlantType, error) {
+	rets := m.Called()
+	return rets.Get(0).([]*PlantsPerPlantType), rets.Error(1)
+}
+func (m *MockStore) GetAllPlantsInModules() ([]*PlantsPerPlantType, error) {
+	rets := m.Called()
+	return rets.Get(0).([]*PlantsPerPlantType), rets.Error(1)
+}
+func (m *MockStore) GetAmountOfPlantsPerModule(int) int {
+	rets := m.Called()
+	return rets.Get(0).(int)
+}
 func (m *MockStore) GetHarvestablePlant(plantType *PlantType) (*PositionOnFarm, error) {
 	rets := m.Called(plantType)
 	return rets.Get(0).(*PositionOnFarm), rets.Error(1)
