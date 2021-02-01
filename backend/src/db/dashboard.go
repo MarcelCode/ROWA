@@ -99,18 +99,18 @@ func (store *Database) GetAllPlantablePlants() (plantablePlants []*PlantsPerPlan
 	return plantablePlants, err
 }
 
-func (store *Database) GetAmountOfPlantsPerModule(moduleNumber int) (id int) {
+func (store *Database) GetAmountOfPlantsPerModule(moduleNumber int) (amountOfPlants int) {
 	sqlQuery := `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
 	rows, err := store.Db.Query(sqlQuery, moduleNumber)
 	rows.Next()
 
-	rows.Scan(&moduleNumber)
+	rows.Scan(&amountOfPlants)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 	rows.Close()
-	return moduleNumber
+	return amountOfPlants
 }
 
 func (store *Database) GetPlantTypePerModule(moduleNumber int) (plantType string) {
